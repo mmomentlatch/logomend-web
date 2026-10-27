@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
 const source = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const siteUrl = 'https://mmomentlatch.github.io/logomend-web';
 const locales = {
   en: {
     title: 'Remove or Add a Logo to Video Online | LogoMend Web',
@@ -27,10 +28,10 @@ for (const [language, metadata] of Object.entries(locales)) {
     .replace('<html lang="uk">', `<html lang="${language}">`)
     .replace(/<title>[^<]+<\/title>/, `<title>${metadata.title}</title>`)
     .replace(/<meta name="description" content="[^"]+">/, `<meta name="description" content="${metadata.description}">`)
-    .replace('<link rel="canonical" href="https://logomend.com/">', `<link rel="canonical" href="https://logomend.com/${language}/">`)
+    .replace(`<link rel="canonical" href="${siteUrl}/">`, `<link rel="canonical" href="${siteUrl}/${language}/">`)
     .replace('<meta property="og:title" content="LogoMend Web — приватний редактор логотипів у відео">', `<meta property="og:title" content="${metadata.ogTitle}">`)
     .replace('<meta property="og:description" content="Обробляйте відео локально у браузері: без реєстрації, хмари й передачі файлів.">', `<meta property="og:description" content="${metadata.ogDescription}">`)
-    .replace('<meta property="og:url" content="https://logomend.com/">', `<meta property="og:url" content="https://logomend.com/${language}/">`)
+    .replace(`<meta property="og:url" content="${siteUrl}/">`, `<meta property="og:url" content="${siteUrl}/${language}/">`)
     .replace('href="./favicon.svg"', 'href="../favicon.svg"')
     .replace('src="./ads-config.js"', 'src="../ads-config.js"');
   mkdirSync(new URL(`../${language}/`, import.meta.url), { recursive: true });

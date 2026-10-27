@@ -46,7 +46,7 @@ pnpm run build
 3. створює production-збірку;
 4. публікує папку `dist/` у GitHub Pages.
 
-У репозиторії потрібно один раз відкрити **Settings → Pages** і вибрати **Source: GitHub Actions**. Для безкоштовного GitHub Pages репозиторій має бути публічним. Після першого успішного запуску сайт буде доступний за адресою `https://ІМʼЯ-КОРИСТУВАЧА.github.io/logomend-web/`.
+GitHub Pages увімкнено в режимі **GitHub Actions**. Після кожного успішного push сайт автоматично оновлюється за адресою `https://mmomentlatch.github.io/logomend-web/`.
 
 ## Реклама
 

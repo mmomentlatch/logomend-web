@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://logomend.com/sitemap.xml
+Sitemap: https://mmomentlatch.github.io/logomend-web/sitemap.xml
