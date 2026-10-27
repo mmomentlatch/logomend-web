@@ -1,0 +1,124 @@
+const uk = {
+  'engine.waiting': 'Рушій готовий до запуску',
+  'engine.note': 'FFmpeg завантажиться лише перед обробкою',
+  'remove.empty': 'Область ще не виділена',
+  'add.empty': 'Логотип ще не вибрано',
+  'progress.loading': 'Готуємо відеорушій…',
+  'progress.loadingText': 'Один раз завантажуємо FFmpeg WebAssembly у ваш браузер.',
+  'runtime.invalidVideo': 'Оберіть відеофайл MP4, MOV, WebM, MKV або AVI.',
+  'runtime.tooLarge': 'Цей файл завеликий для надійної роботи у браузері. Використайте LogoMend Local для відео понад 1,5 ГБ.',
+  'runtime.largeWarning': 'Файл великий. Браузеру може не вистачити пам’яті. Для довгих або 2K/4K-відео краще використати LogoMend Local. Продовжити?',
+  'runtime.videoError': 'Браузер не може показати попередній перегляд цього формату. Спробуйте MP4 (H.264), MOV або WebM.',
+  'runtime.rectangle': 'Область: {w} × {h} px · x {x}, y {y}',
+  'runtime.brush': 'Маска пензля: {count} штр. · {w} × {h} px',
+  'runtime.logoReady': 'Логотип: {name}',
+  'runtime.engineLoading': 'Завантажуємо FFmpeg WebAssembly…',
+  'runtime.engineLoaded': 'Рушій готовий',
+  'runtime.engineCached': 'Повторні запуски будуть швидшими',
+  'runtime.reading': 'Читаємо відео у локальну пам’ять…',
+  'runtime.processing': 'Обробляємо відео…',
+  'runtime.finalizing': 'Готуємо MP4 для завантаження…',
+  'runtime.failed': 'Перевірте, чи браузеру вистачає оперативної пам’яті, і спробуйте коротше відео.\n\nТехнічні деталі: {message}',
+  'runtime.delogoBrush': 'Швидкий delogo працює лише з прямокутником. Для кисті виберіть «Розумне — FFmpeg» або OpenCV.',
+  'runtime.opencvLoading': 'Завантажуємо OpenCV.js…',
+  'runtime.opencvFrames': 'Готуємо кадри для OpenCV…',
+  'runtime.opencvFrame': 'OpenCV відновлює кадр {current} із {total}',
+  'runtime.opencvAssembling': 'Збираємо кадри та повертаємо звук…',
+  'runtime.opencvStageScript': 'OpenCV.js 4.13.0 · завантаження модуля',
+  'runtime.opencvStageRuntime': 'OpenCV.js 4.13.0 · компіляція WebAssembly',
+  'runtime.opencvStageReady': 'OpenCV.js 4.13.0 · модуль готовий',
+  'runtime.opencvLimit': 'OpenCV Web розрахований на короткі фрагменти до 15 секунд і роздільну здатність не вище 1080p. Обріжте відео або використайте LogoMend Local.',
+  'runtime.opencvUnavailable': 'Ця офіційна збірка OpenCV.js не містить функцію inpaint.',
+  'runtime.play': 'Відтворити',
+  'runtime.pause': 'Пауза',
+  'runtime.drawBrush': 'Замалюйте лише букви або знак',
+  'runtime.drawRect': 'Протягніть рамку поверх логотипа',
+  'runtime.moveLogo': 'Перетягніть логотип у потрібне місце'
+};
+
+const en = {
+  'nav.editor': 'Editor', 'nav.how': 'How it works', 'nav.faq': 'FAQ',
+  'header.private': 'Files stay on your device', 'header.language': 'Language',
+  'hero.eyebrow': 'FREE · RIGHT IN YOUR BROWSER', 'hero.title': 'Remove the old logo.<br><em>Add your own.</em>',
+  'hero.lead': 'LogoMend Web processes video on your device. No cloud uploads, registration or subscription.', 'hero.cta': 'Edit a video', 'hero.local': 'local processing',
+  'ads.label': 'ADVERTISEMENT', 'ads.placeholder': 'Space for responsive Google AdSense',
+  'app.eyebrow': 'VIDEO EDITOR', 'app.title': 'Create a clean version of your video',
+  'engine.waiting': 'Engine ready to start', 'engine.note': 'FFmpeg loads only when processing begins',
+  'upload.title': 'Drop your video here', 'upload.subtitle': 'or click to choose a file', 'upload.privacyTitle': 'Privacy built in', 'upload.privacyText': 'The file is read only by your browser and is never sent anywhere.',
+  'stage.drawRect': 'Drag a box over the logo', 'file.replace': 'Replace', 'tabs.remove': 'Remove', 'tabs.add': 'Add logo',
+  'remove.areaTitle': 'Select the area', 'remove.areaText': 'Work on a paused frame', 'remove.rectangle': '▭ Rectangle', 'remove.brush': '⌁ Brush', 'remove.brushSize': 'Brush size', 'remove.undo': '↶ Undo', 'remove.clear': 'Clear', 'remove.empty': 'No area selected yet',
+  'remove.methodTitle': 'Choose a method', 'remove.methodText': 'Local background restoration modes', 'method.smart': 'Smart — FFmpeg', 'method.smartText': 'Rebuilds the background from a mask', 'method.delogo': 'Quick — delogo', 'method.delogoText': 'Rectangle areas only', 'method.opencv': 'OpenCV restoration', 'method.opencvText': 'Rebuilds every frame · up to 15 seconds', 'remove.strength': 'Restoration radius',
+  'add.uploadTitle': 'Upload your logo', 'add.uploadText': 'Transparent PNG gives the best result', 'add.choose': 'Choose PNG, JPG or WebP', 'add.empty': 'No logo selected yet', 'add.positionTitle': 'Place it on the frame', 'add.positionText': 'Drag the logo where you want it', 'add.size': 'Size', 'add.opacity': 'Opacity',
+  'export.title': 'Export quality', 'export.text': 'Original resolution is preserved', 'export.maximum': 'Maximum · CRF 18', 'export.high': 'High · CRF 21', 'export.compact': 'Compact · CRF 25',
+  'trim.title': 'Trim video', 'trim.text': 'Remove extra time from the beginning or end', 'trim.start': 'Start', 'trim.end': 'End', 'trim.duration': 'Result duration', 'trim.reset': 'Reset',
+  'process.start': 'Process video', 'process.note': 'On the first run, the browser downloads about 32 MB of engine files.',
+  'progress.eyebrow': 'LOCAL PROCESSING', 'progress.loading': 'Preparing the video engine…', 'progress.loadingText': 'FFmpeg WebAssembly is loaded into your browser once.', 'progress.cancel': 'Cancel',
+  'result.eyebrow': 'READY', 'result.title': 'Your new video is ready', 'result.text': 'Preview the result and save the MP4 copy to your device.', 'result.nextTitle': 'Want to keep editing?', 'result.nextText': 'Use this result as the next source: add your logo or trim the beginning and end.', 'result.continue': 'Add logo or trim', 'result.download': 'Download MP4', 'result.back': 'Edit this step', 'result.new': 'Another video',
+  'error.title': 'Video processing failed', 'error.back': 'Go back',
+  'how.eyebrow': 'A SIMPLE PROCESS', 'how.title': 'From video to result in three steps', 'how.step1Title': 'Add a video', 'how.step1Text': 'Choose a file from your computer. It will not be uploaded to our server.', 'how.step2Title': 'Mark the logo', 'how.step2Text': 'Paint a precise brush mask or select a rectangle.', 'how.step3Title': 'Save the result', 'how.step3Text': 'Preview the finished video and download the MP4 to your device.',
+  'compare.eyebrow': 'TWO PRODUCTS', 'compare.title': 'Web for convenience.<br>Local for maximum power.', 'compare.text': 'The browser edition is ideal for short videos and quick fixes. For long 2K/4K files and STTN AI restoration, use LogoMend Local.', 'compare.web1': 'No installation', 'compare.web2': 'In-browser processing', 'compare.web3': 'FFmpeg, OpenCV and logo overlay', 'compare.current': 'You are here', 'compare.local1': 'For large files', 'compare.local2': 'STTN and multi-frame modes', 'compare.local3': 'Faster on a powerful PC', 'compare.download': 'Download for Windows →',
+  'faq.eyebrow': 'FREQUENTLY ASKED QUESTIONS', 'faq.title': 'Good to know', 'faq.q1': 'Is my video uploaded to a server?', 'faq.a1': 'No. The file is processed in your browser memory with WebAssembly. We never receive its contents.', 'faq.q2': 'Which formats and resolutions are supported?', 'faq.a2': 'MP4, MOV and WebM work best. 720p, 1080p, 2K and 4K are supported, but large videos require more memory.', 'faq.q3': 'Why is Web slower than Local?', 'faq.a3': 'Browsers isolate processing and impose stricter memory limits. Local uses native FFmpeg and is better for large files.', 'faq.q4': 'Will the logo disappear perfectly?', 'faq.a4': 'The result depends on the background, motion and logo size. OpenCV and FFmpeg rebuild the selected area from neighboring pixels; very complex moving backgrounds are better handled by Local AI modes.', 'faq.q5': 'Can I remove any watermark?', 'faq.a5': 'Only process your own material or video you have permission to edit. Removing someone else’s attribution may violate their rights.',
+  'footer.tagline': 'A private video editor that runs on your device.', 'footer.privacy': 'Privacy', 'footer.terms': 'Terms', 'footer.rights': 'All rights reserved.',
+  'runtime.invalidVideo': 'Choose an MP4, MOV, WebM, MKV or AVI video file.', 'runtime.tooLarge': 'This file is too large for reliable browser processing. Use LogoMend Local for videos over 1.5 GB.', 'runtime.largeWarning': 'This is a large file and your browser may run out of memory. LogoMend Local is recommended for long or 2K/4K video. Continue?', 'runtime.videoError': 'Your browser cannot preview this format. Try MP4 (H.264), MOV or WebM.', 'runtime.rectangle': 'Area: {w} × {h} px · x {x}, y {y}', 'runtime.brush': 'Brush mask: {count} stroke(s) · {w} × {h} px', 'runtime.logoReady': 'Logo: {name}', 'runtime.engineLoading': 'Loading FFmpeg WebAssembly…', 'runtime.engineLoaded': 'Engine ready', 'runtime.engineCached': 'Later runs will start faster', 'runtime.reading': 'Reading the video into local memory…', 'runtime.processing': 'Processing video…', 'runtime.finalizing': 'Preparing the MP4 download…', 'runtime.failed': 'Check that the browser has enough memory and try a shorter video.\n\nTechnical details: {message}', 'runtime.delogoBrush': 'Quick delogo only supports rectangles. For a brush mask choose Smart — FFmpeg or OpenCV.', 'runtime.opencvLoading': 'Loading OpenCV.js…', 'runtime.opencvFrames': 'Preparing frames for OpenCV…', 'runtime.opencvFrame': 'OpenCV is restoring frame {current} of {total}', 'runtime.opencvAssembling': 'Reassembling frames and restoring audio…', 'runtime.opencvStageScript': 'OpenCV.js 4.13.0 · loading module', 'runtime.opencvStageRuntime': 'OpenCV.js 4.13.0 · compiling WebAssembly', 'runtime.opencvStageReady': 'OpenCV.js 4.13.0 · module ready', 'runtime.opencvLimit': 'OpenCV Web is designed for clips up to 15 seconds and resolutions up to 1080p. Trim the video or use LogoMend Local.', 'runtime.opencvUnavailable': 'This official OpenCV.js build does not include inpaint.', 'runtime.play': 'Play', 'runtime.pause': 'Pause', 'runtime.drawBrush': 'Paint only the letters or symbol', 'runtime.drawRect': 'Drag a box over the logo', 'runtime.moveLogo': 'Drag the logo where you want it'
+};
+
+const pl = {
+  ...en,
+  'nav.editor': 'Edytor', 'nav.how': 'Jak to działa', 'nav.faq': 'Pytania', 'header.private': 'Pliki pozostają na urządzeniu', 'header.language': 'Język',
+  'hero.eyebrow': 'BEZPŁATNIE · W PRZEGLĄDARCE', 'hero.title': 'Usuń stare logo.<br><em>Dodaj własne.</em>', 'hero.lead': 'LogoMend Web przetwarza wideo na Twoim urządzeniu. Bez chmury, rejestracji i abonamentu.', 'hero.cta': 'Edytuj wideo', 'hero.local': 'przetwarzanie lokalne',
+  'app.title': 'Utwórz czystą wersję wideo', 'engine.waiting': 'Silnik gotowy do uruchomienia', 'engine.note': 'FFmpeg pobierze się dopiero przed obróbką',
+  'upload.title': 'Przeciągnij wideo tutaj', 'upload.subtitle': 'lub kliknij, aby wybrać plik', 'upload.privacyTitle': 'Prywatność w standardzie', 'upload.privacyText': 'Plik odczytuje wyłącznie Twoja przeglądarka i nigdzie go nie wysyła.',
+  'tabs.remove': 'Usuń', 'tabs.add': 'Dodaj logo', 'remove.areaTitle': 'Zaznacz obszar', 'remove.areaText': 'Pracuj na zatrzymanej klatce', 'remove.rectangle': '▭ Prostokąt', 'remove.brush': '⌁ Pędzel', 'remove.brushSize': 'Grubość pędzla', 'remove.undo': '↶ Cofnij', 'remove.clear': 'Wyczyść', 'remove.empty': 'Nie zaznaczono obszaru',
+  'remove.methodTitle': 'Wybierz metodę', 'remove.methodText': 'Lokalne tryby odtwarzania tła', 'method.smart': 'Inteligentne — FFmpeg', 'method.smartText': 'Odtwarza tło według maski', 'method.delogo': 'Szybkie — delogo', 'method.delogoText': 'Tylko prostokątny obszar', 'method.opencv': 'Odtwarzanie OpenCV', 'method.opencvText': 'Odtwarza każdą klatkę · do 15 sekund', 'remove.strength': 'Promień odtwarzania',
+  'add.uploadTitle': 'Wczytaj logo', 'add.uploadText': 'Najlepszy będzie PNG z przezroczystością', 'add.choose': 'Wybierz PNG, JPG lub WebP', 'add.empty': 'Nie wybrano logo', 'add.positionTitle': 'Umieść na kadrze', 'add.positionText': 'Przeciągnij logo w wybrane miejsce', 'add.size': 'Rozmiar', 'add.opacity': 'Przezroczystość',
+  'export.title': 'Jakość eksportu', 'export.text': 'Oryginalna rozdzielczość zostanie zachowana', 'process.start': 'Przetwórz wideo', 'process.note': 'Przy pierwszym uruchomieniu przeglądarka pobierze około 32 MB silnika.',
+  'trim.title': 'Przytnij wideo', 'trim.text': 'Usuń fragment z początku lub końca', 'trim.start': 'Początek', 'trim.end': 'Koniec', 'trim.duration': 'Długość wyniku', 'trim.reset': 'Resetuj',
+  'result.title': 'Nowe wideo jest gotowe', 'result.text': 'Obejrzyj rezultat i zapisz kopię MP4 na urządzeniu.', 'result.nextTitle': 'Chcesz kontynuować?', 'result.nextText': 'Użyj tego wyniku jako nowego źródła: dodaj logo lub przytnij początek i koniec.', 'result.continue': 'Dodaj logo lub przytnij', 'result.download': 'Pobierz MP4', 'result.back': 'Edytuj ten krok', 'result.new': 'Inne wideo',
+  'how.title': 'Od wideo do rezultatu w trzech krokach', 'how.step1Title': 'Dodaj wideo', 'how.step1Text': 'Wybierz plik z komputera. Nie zostanie wysłany na nasz serwer.', 'how.step2Title': 'Zaznacz logo', 'how.step2Text': 'Namaluj dokładną maskę pędzlem lub zaznacz prostokąt.', 'how.step3Title': 'Zapisz wynik', 'how.step3Text': 'Obejrzyj gotowe wideo i pobierz MP4.',
+  'footer.tagline': 'Prywatny edytor wideo działający na Twoim urządzeniu.', 'footer.privacy': 'Prywatność', 'footer.terms': 'Warunki', 'footer.rights': 'Wszelkie prawa zastrzeżone.',
+  'runtime.invalidVideo': 'Wybierz plik MP4, MOV, WebM, MKV lub AVI.', 'runtime.tooLarge': 'Plik jest zbyt duży do niezawodnej pracy w przeglądarce. Dla wideo ponad 1,5 GB użyj LogoMend Local.', 'runtime.largeWarning': 'To duży plik i przeglądarce może zabraknąć pamięci. Dla długich lub 2K/4K nagrań zalecamy LogoMend Local. Kontynuować?', 'runtime.videoError': 'Przeglądarka nie może wyświetlić tego formatu. Spróbuj MP4 (H.264), MOV lub WebM.', 'runtime.rectangle': 'Obszar: {w} × {h} px · x {x}, y {y}', 'runtime.brush': 'Maska pędzla: {count} · {w} × {h} px', 'runtime.logoReady': 'Logo: {name}', 'runtime.engineLoading': 'Ładowanie FFmpeg WebAssembly…', 'runtime.engineLoaded': 'Silnik gotowy', 'runtime.engineCached': 'Kolejne uruchomienia będą szybsze', 'runtime.reading': 'Odczyt wideo do pamięci lokalnej…', 'runtime.processing': 'Przetwarzanie wideo…', 'runtime.finalizing': 'Przygotowanie pliku MP4…', 'runtime.failed': 'Sprawdź dostępną pamięć przeglądarki i spróbuj krótszego wideo.\n\nSzczegóły: {message}', 'runtime.delogoBrush': 'Szybki delogo obsługuje tylko prostokąt. Dla pędzla wybierz Inteligentne — FFmpeg lub OpenCV.', 'runtime.play': 'Odtwórz', 'runtime.pause': 'Pauza', 'runtime.drawBrush': 'Zamaluj tylko litery lub znak', 'runtime.drawRect': 'Przeciągnij ramkę nad logo', 'runtime.moveLogo': 'Przeciągnij logo w wybrane miejsce'
+};
+
+const de = {
+  ...en,
+  'nav.editor': 'Editor', 'nav.how': 'So funktioniert es', 'nav.faq': 'Fragen', 'header.private': 'Dateien bleiben auf Ihrem Gerät', 'header.language': 'Sprache',
+  'hero.eyebrow': 'KOSTENLOS · DIREKT IM BROWSER', 'hero.title': 'Altes Logo entfernen.<br><em>Eigenes hinzufügen.</em>', 'hero.lead': 'LogoMend Web verarbeitet Videos auf Ihrem Gerät. Keine Cloud, keine Anmeldung, kein Abo.', 'hero.cta': 'Video bearbeiten', 'hero.local': 'lokale Verarbeitung',
+  'app.title': 'Erstellen Sie eine saubere Videoversion', 'engine.waiting': 'Engine startbereit', 'engine.note': 'FFmpeg wird erst vor der Verarbeitung geladen',
+  'upload.title': 'Video hier ablegen', 'upload.subtitle': 'oder klicken, um eine Datei auszuwählen', 'upload.privacyTitle': 'Datenschutz integriert', 'upload.privacyText': 'Die Datei wird nur von Ihrem Browser gelesen und nirgendwohin gesendet.',
+  'tabs.remove': 'Entfernen', 'tabs.add': 'Logo hinzufügen', 'remove.areaTitle': 'Bereich auswählen', 'remove.areaText': 'Arbeiten Sie mit einem pausierten Bild', 'remove.rectangle': '▭ Rechteck', 'remove.brush': '⌁ Pinsel', 'remove.brushSize': 'Pinselgröße', 'remove.undo': '↶ Rückgängig', 'remove.clear': 'Leeren', 'remove.empty': 'Noch kein Bereich ausgewählt',
+  'remove.methodTitle': 'Methode wählen', 'remove.methodText': 'Lokale Modi zur Hintergrundrekonstruktion', 'method.smart': 'Intelligent — FFmpeg', 'method.smartText': 'Rekonstruiert den Hintergrund per Maske', 'method.delogo': 'Schnell — delogo', 'method.delogoText': 'Nur rechteckige Bereiche', 'method.opencv': 'OpenCV-Wiederherstellung', 'method.opencvText': 'Rekonstruiert jedes Bild · bis 15 Sekunden', 'remove.strength': 'Rekonstruktionsradius',
+  'add.uploadTitle': 'Logo hochladen', 'add.uploadText': 'Transparentes PNG liefert das beste Ergebnis', 'add.choose': 'PNG, JPG oder WebP wählen', 'add.empty': 'Noch kein Logo ausgewählt', 'add.positionTitle': 'Im Bild platzieren', 'add.positionText': 'Ziehen Sie das Logo an die gewünschte Stelle', 'add.size': 'Größe', 'add.opacity': 'Deckkraft',
+  'export.title': 'Exportqualität', 'export.text': 'Die Originalauflösung bleibt erhalten', 'process.start': 'Video verarbeiten', 'process.note': 'Beim ersten Start lädt der Browser etwa 32 MB Engine-Dateien.',
+  'trim.title': 'Video kürzen', 'trim.text': 'Anfang oder Ende entfernen', 'trim.start': 'Anfang', 'trim.end': 'Ende', 'trim.duration': 'Ergebnisdauer', 'trim.reset': 'Zurücksetzen',
+  'result.title': 'Ihr neues Video ist fertig', 'result.text': 'Prüfen Sie das Ergebnis und speichern Sie die MP4-Kopie.', 'result.nextTitle': 'Weiter bearbeiten?', 'result.nextText': 'Nutzen Sie dieses Ergebnis als neue Quelle: Logo hinzufügen oder Anfang und Ende kürzen.', 'result.continue': 'Logo hinzufügen oder kürzen', 'result.download': 'MP4 herunterladen', 'result.back': 'Diesen Schritt ändern', 'result.new': 'Anderes Video',
+  'how.title': 'In drei Schritten zum Ergebnis', 'how.step1Title': 'Video hinzufügen', 'how.step1Text': 'Wählen Sie eine Datei. Sie wird nicht auf unseren Server hochgeladen.', 'how.step2Title': 'Logo markieren', 'how.step2Text': 'Malen Sie eine genaue Maske oder wählen Sie ein Rechteck.', 'how.step3Title': 'Ergebnis speichern', 'how.step3Text': 'Prüfen Sie das fertige Video und laden Sie die MP4-Datei herunter.',
+  'footer.tagline': 'Ein privater Videoeditor, der auf Ihrem Gerät läuft.', 'footer.privacy': 'Datenschutz', 'footer.terms': 'Bedingungen', 'footer.rights': 'Alle Rechte vorbehalten.',
+  'runtime.invalidVideo': 'Wählen Sie eine MP4-, MOV-, WebM-, MKV- oder AVI-Datei.', 'runtime.tooLarge': 'Die Datei ist für eine zuverlässige Browser-Verarbeitung zu groß. Nutzen Sie LogoMend Local für Videos über 1,5 GB.', 'runtime.largeWarning': 'Diese Datei ist groß und der Browser könnte zu wenig Speicher haben. Für lange oder 2K/4K-Videos empfehlen wir LogoMend Local. Fortfahren?', 'runtime.videoError': 'Ihr Browser kann dieses Format nicht anzeigen. Versuchen Sie MP4 (H.264), MOV oder WebM.', 'runtime.rectangle': 'Bereich: {w} × {h} px · x {x}, y {y}', 'runtime.brush': 'Pinselmaske: {count} Strich(e) · {w} × {h} px', 'runtime.logoReady': 'Logo: {name}', 'runtime.engineLoading': 'FFmpeg WebAssembly wird geladen…', 'runtime.engineLoaded': 'Engine bereit', 'runtime.engineCached': 'Weitere Starts werden schneller', 'runtime.reading': 'Video wird in den lokalen Speicher gelesen…', 'runtime.processing': 'Video wird verarbeitet…', 'runtime.finalizing': 'MP4-Download wird vorbereitet…', 'runtime.failed': 'Prüfen Sie den verfügbaren Browserspeicher und versuchen Sie ein kürzeres Video.\n\nDetails: {message}', 'runtime.delogoBrush': 'Schnelles delogo unterstützt nur Rechtecke. Für Pinselmasken wählen Sie Intelligent — FFmpeg oder OpenCV.', 'runtime.play': 'Abspielen', 'runtime.pause': 'Pause', 'runtime.drawBrush': 'Nur Buchstaben oder Symbol übermalen', 'runtime.drawRect': 'Rechteck über das Logo ziehen', 'runtime.moveLogo': 'Logo an die gewünschte Stelle ziehen'
+};
+
+export const dictionaries = { uk, en, pl, de };
+
+export function languageFromPage() {
+  const declared = document.documentElement.lang?.slice(0, 2);
+  return dictionaries[declared] ? declared : 'uk';
+}
+
+export function createTranslator(language) {
+  return (key, vars = {}) => {
+    const value = dictionaries[language]?.[key] ?? dictionaries.en[key] ?? uk[key] ?? key;
+    return Object.entries(vars).reduce((text, [name, replacement]) => text.replaceAll(`{${name}}`, String(replacement)), value);
+  };
+}
+
+export function applyTranslations(language) {
+  const t = createTranslator(language);
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const value = dictionaries[language]?.[element.dataset.i18n];
+    if (value) element.textContent = value;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(element => {
+    const value = dictionaries[language]?.[element.dataset.i18n];
+    if (value) element.innerHTML = value;
+  });
+  return t;
+}
