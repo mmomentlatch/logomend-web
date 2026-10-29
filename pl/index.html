@@ -188,6 +188,16 @@
             <div class="trim-visual" aria-hidden="true"><div id="trimSelected"></div></div>
             <label class="range-row"><span><b data-i18n="trim.start">Початок</b><output id="trimStartValue">0:00.0</output></span><input id="trimStart" type="range" min="0" max="0" step="0.1" value="0"></label>
             <label class="range-row"><span><b data-i18n="trim.end">Кінець</b><output id="trimEndValue">0:00.0</output></span><input id="trimEnd" type="range" min="0" max="0" step="0.1" value="0"></label>
+            <div class="time-entry-grid">
+              <div class="time-entry">
+                <strong data-i18n="trim.exactStart">Точний початок</strong>
+                <div><label><input id="trimStartMinutes" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Хвилини початку"><span data-i18n="trim.minutesShort">хв</span></label><i>:</i><label><input id="trimStartSeconds" type="number" min="0" step="0.1" value="0.0" inputmode="decimal" aria-label="Секунди початку"><span data-i18n="trim.secondsShort">с</span></label></div>
+              </div>
+              <div class="time-entry">
+                <strong data-i18n="trim.exactEnd">Точний кінець</strong>
+                <div><label><input id="trimEndMinutes" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Хвилини кінця"><span data-i18n="trim.minutesShort">хв</span></label><i>:</i><label><input id="trimEndSeconds" type="number" min="0" step="0.1" value="0.0" inputmode="decimal" aria-label="Секунди кінця"><span data-i18n="trim.secondsShort">с</span></label></div>
+              </div>
+            </div>
             <div class="trim-summary"><span data-i18n="trim.duration">Тривалість результату</span><b id="trimDuration">0:00.0</b><button id="resetTrim" type="button" data-i18n="trim.reset">Скинути</button></div>
           </section>
 

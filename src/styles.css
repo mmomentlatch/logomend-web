@@ -262,6 +262,14 @@ input[type='range'] { accent-color: var(--forest-2); }
 .select-row select { width: 100%; padding: 11px 12px; border: 1px solid #d5dfd7; border-radius: 10px; background: white; color: var(--ink); font-size: 10px; }
 .trim-visual { position: relative; height: 7px; margin: 17px 2px 2px; border-radius: 999px; background: #e3e9e4; }
 .trim-visual div { position: absolute; inset-block: 0; left: 0; right: 0; border-radius: inherit; background: linear-gradient(90deg, var(--forest-2), var(--lime-dark)); }
+.time-entry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 15px; }
+.time-entry { min-width: 0; padding: 10px; border: 1px solid #dce4dd; border-radius: 11px; background: #fafcfa; }
+.time-entry > strong { display: block; margin-bottom: 8px; color: #53625a; font-size: 9px; }
+.time-entry > div { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 5px; }
+.time-entry label { min-width: 0; display: grid; gap: 3px; color: var(--muted); font-size: 8px; }
+.time-entry input { min-width: 0; width: 100%; padding: 8px 5px; border: 1px solid #cad6cd; border-radius: 8px; background: white; color: var(--ink); font: 700 12px/1 'Manrope'; text-align: center; font-variant-numeric: tabular-nums; }
+.time-entry input:focus { outline: 2px solid rgba(57,125,83,.2); border-color: var(--forest-2); }
+.time-entry i { align-self: center; margin-top: 1px; color: var(--forest-2); font-style: normal; font-weight: 800; }
 .trim-summary { display: flex; align-items: center; gap: 7px; margin-top: 12px; padding: 9px 10px; border-radius: 10px; background: #f3f6f2; color: var(--muted); font-size: 9px; }
 .trim-summary b { color: var(--forest); font-variant-numeric: tabular-nums; }
 .trim-summary button { margin-left: auto; padding: 3px 0; border: 0; background: transparent; color: var(--forest-2); font-size: 9px; font-weight: 800; cursor: pointer; }
@@ -397,6 +405,7 @@ footer > small { color: #929d97; font-size: 9px; }
   .player-controls { grid-template-columns: 34px 1fr 34px; }
   .player-controls > span { display: none; }
   .control-panel { padding: 16px; }
+  .time-entry-grid { grid-template-columns: 1fr; }
   .method-grid { grid-template-columns: 1fr; }
   .method-card { min-height: 72px; display: grid; }
   .compare-section { padding: 42px 22px; border-radius: 22px; }

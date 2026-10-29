@@ -195,7 +195,6 @@ $('#muteButton').addEventListener('click', () => {
 $('#trimStart').addEventListener('input', event => {
   const maximumStart = Math.max(0, state.trimEnd - .1);
   state.trimStart = Math.min(Number(event.target.value), maximumStart);
-  event.target.value = state.trimStart;
   updateTrimUi();
   sourceVideo.currentTime = state.trimStart;
   updateProcessButton();
@@ -203,11 +202,41 @@ $('#trimStart').addEventListener('input', event => {
 $('#trimEnd').addEventListener('input', event => {
   const minimumEnd = Math.min(sourceVideo.duration || 0, state.trimStart + .1);
   state.trimEnd = Math.max(Number(event.target.value), minimumEnd);
-  event.target.value = state.trimEnd;
   updateTrimUi();
   sourceVideo.currentTime = Math.max(0, state.trimEnd - .05);
   updateProcessButton();
 });
+
+for (const boundary of ['Start', 'End']) {
+  for (const unit of ['Minutes', 'Seconds']) {
+    const input = $(`#trim${boundary}${unit}`);
+    input.addEventListener('change', () => setTrimFromTimeFields(boundary.toLowerCase()));
+    input.addEventListener('keydown', event => {
+      if (event.key === 'Enter') input.blur();
+    });
+  }
+}
+
+function setTrimFromTimeFields(boundary) {
+  const prefix = boundary === 'start' ? 'trimStart' : 'trimEnd';
+  const minutesInput = $(`#${prefix}Minutes`);
+  const secondsInput = $(`#${prefix}Seconds`);
+  const minutes = Number.isFinite(minutesInput.valueAsNumber) ? Math.max(0, minutesInput.valueAsNumber) : 0;
+  const seconds = Number.isFinite(secondsInput.valueAsNumber) ? Math.max(0, secondsInput.valueAsNumber) : 0;
+  const requested = minutes * 60 + seconds;
+  const duration = Number.isFinite(sourceVideo.duration) ? sourceVideo.duration : 0;
+  if (!duration) return;
+
+  if (boundary === 'start') {
+    state.trimStart = Math.max(0, Math.min(requested, duration, state.trimEnd - .1));
+    sourceVideo.currentTime = state.trimStart;
+  } else {
+    state.trimEnd = Math.min(duration, Math.max(requested, state.trimStart + .1));
+    sourceVideo.currentTime = Math.max(0, state.trimEnd - .05);
+  }
+  updateTrimUi();
+  updateProcessButton();
+}
 $('#resetTrim').addEventListener('click', () => {
   resetTrim();
   updateProcessButton();
@@ -218,8 +247,7 @@ function resetTrim() {
   state.trimStart = 0;
   state.trimEnd = duration;
   for (const input of [$('#trimStart'), $('#trimEnd')]) input.max = duration;
-  $('#trimStart').value = 0;
-  $('#trimEnd').value = duration;
+  for (const input of [$('#trimStartMinutes'), $('#trimEndMinutes')]) input.max = Math.ceil(duration / 60);
   updateTrimUi();
 }
 
@@ -229,9 +257,21 @@ function updateTrimUi() {
   const endPercent = duration ? state.trimEnd / duration * 100 : 100;
   $('#trimSelected').style.left = `${startPercent}%`;
   $('#trimSelected').style.right = `${Math.max(0, 100 - endPercent)}%`;
+  $('#trimStart').value = state.trimStart;
+  $('#trimEnd').value = state.trimEnd;
   $('#trimStartValue').textContent = formatPreciseTime(state.trimStart);
   $('#trimEndValue').textContent = formatPreciseTime(state.trimEnd);
   $('#trimDuration').textContent = formatPreciseTime(Math.max(0, state.trimEnd - state.trimStart));
+  updateTimeFields('trimStart', state.trimStart);
+  updateTimeFields('trimEnd', state.trimEnd);
+}
+
+function updateTimeFields(prefix, value) {
+  const rounded = Math.round(Math.max(0, value) * 10) / 10;
+  const minutes = Math.floor(rounded / 60);
+  const seconds = rounded - minutes * 60;
+  $(`#${prefix}Minutes`).value = String(minutes);
+  $(`#${prefix}Seconds`).value = seconds.toFixed(1);
 }
 
 function trimChanged() {
