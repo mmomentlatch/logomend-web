@@ -5,19 +5,19 @@ const siteUrl = 'https://mmomentlatch.github.io/logomend-web';
 const locales = {
   en: {
     title: 'Remove or Add a Logo to Video Online | LogoMend Web',
-    description: 'Remove logos with background restoration or add your own logo to video for free in your browser. MP4, MOV and WebM, 720p through 4K. Files never upload to a server.',
+    description: 'Remove or add logos, trim video, and insert intro or outro images for free in your browser. MP4, MOV and WebM, 720p through 4K. No server uploads.',
     ogTitle: 'LogoMend Web — private in-browser video logo editor',
     ogDescription: 'Edit video locally in your browser: no registration, cloud upload or subscription.'
   },
   pl: {
     title: 'Usuń lub dodaj logo do wideo online | LogoMend Web',
-    description: 'Usuwaj logo z odtwarzaniem tła lub dodawaj własne logo do wideo bezpłatnie w przeglądarce. MP4, MOV, WebM, 720p–4K. Pliki nie trafiają na serwer.',
+    description: 'Usuwaj i dodawaj logo, przycinaj film oraz wstawiaj obraz na początku lub końcu bezpłatnie w przeglądarce. MP4, MOV, WebM, 720p–4K. Bez wysyłania na serwer.',
     ogTitle: 'LogoMend Web — prywatny edytor logo w wideo',
     ogDescription: 'Edytuj wideo lokalnie w przeglądarce, bez rejestracji, chmury i abonamentu.'
   },
   de: {
     title: 'Logo im Video online entfernen oder hinzufügen | LogoMend Web',
-    description: 'Logos mit Hintergrundrekonstruktion kostenlos im Browser entfernen oder eigene Logos hinzufügen. MP4, MOV, WebM, 720p bis 4K. Keine Server-Uploads.',
+    description: 'Logos entfernen oder hinzufügen, Videos kürzen und Intro-/Outro-Bilder kostenlos im Browser einfügen. MP4, MOV, WebM, 720p bis 4K. Keine Server-Uploads.',
     ogTitle: 'LogoMend Web — privater Video-Logo-Editor im Browser',
     ogDescription: 'Videos lokal im Browser bearbeiten: ohne Anmeldung, Cloud-Upload oder Abonnement.'
   }

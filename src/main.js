@@ -24,6 +24,7 @@ const maskCanvas = $('#maskCanvas');
 const maskContext = maskCanvas.getContext('2d');
 const rectSelection = $('#rectSelection');
 const logoOverlay = $('#logoOverlay');
+const coverPreview = $('#coverPreview');
 const seekBar = $('#seekBar');
 
 const state = {
@@ -40,6 +41,9 @@ const state = {
   logoUrl: null,
   logo: null,
   logoDrag: null,
+  coverFile: null,
+  coverUrl: null,
+  coverPosition: 'start',
   ffmpeg: null,
   enginePromise: null,
   cv: null,
@@ -107,6 +111,7 @@ async function loadVideo(file) {
   revokeVideoUrl();
   clearSelection();
   clearLogo();
+  clearCover();
   state.videoFile = file;
   state.videoUrl = URL.createObjectURL(file);
   sourceVideo.src = state.videoUrl;
@@ -153,6 +158,7 @@ function syncStageLayers() {
   drawMaskPreview();
   renderRectangle();
   renderLogo();
+  renderCover();
 }
 
 function formatTime(seconds) {
@@ -239,10 +245,17 @@ function selectOperation(operation) {
   $$('.operation-tabs button').forEach(button => button.classList.toggle('active', button.dataset.operation === operation));
   $('#removePanel').classList.toggle('hidden', operation !== 'remove');
   $('#addPanel').classList.toggle('hidden', operation !== 'add');
+  $('#coverPanel').classList.toggle('hidden', operation !== 'cover');
   maskCanvas.style.pointerEvents = operation === 'remove' ? 'auto' : 'none';
   rectSelection.classList.toggle('hidden', operation !== 'remove' || !state.rect || state.tool !== 'rectangle');
   logoOverlay.classList.toggle('hidden', operation !== 'add' || !state.logoFile);
-  $('#stageHint').textContent = operation === 'add' ? t('runtime.moveLogo') : t(state.tool === 'brush' ? 'runtime.drawBrush' : 'runtime.drawRect');
+  coverPreview.classList.toggle('hidden', operation !== 'cover' || !state.coverFile);
+  $('#stageHint').textContent = operation === 'add'
+    ? t('runtime.moveLogo')
+    : operation === 'cover'
+      ? t(state.coverPosition === 'start' ? 'runtime.coverStart' : 'runtime.coverEnd')
+      : t(state.tool === 'brush' ? 'runtime.drawBrush' : 'runtime.drawRect');
+  renderCover();
   updateProcessButton();
 }
 
@@ -531,10 +544,70 @@ function clearLogo() {
   $('#logoName').textContent = t('add.empty');
 }
 
+$('#chooseCover').addEventListener('click', () => $('#coverInput').click());
+$('#coverInput').addEventListener('change', () => loadCover($('#coverInput').files[0]));
+
+function loadCover(file) {
+  if (!file || (!file.type.startsWith('image/') && !/\.(png|jpe?g|webp)$/i.test(file.name))) {
+    window.alert(t('runtime.invalidCover'));
+    return;
+  }
+  if (state.coverUrl) URL.revokeObjectURL(state.coverUrl);
+  state.coverFile = file;
+  state.coverUrl = URL.createObjectURL(file);
+  coverPreview.src = state.coverUrl;
+  coverPreview.onload = () => {
+    renderCover();
+    updateProcessButton();
+  };
+  $('#coverName').textContent = t('runtime.coverReady', { name: file.name });
+}
+
+function renderCover() {
+  if (!state.coverFile || !sourceVideo.videoWidth || state.operation !== 'cover') {
+    coverPreview.classList.add('hidden');
+    return;
+  }
+  const canvasRect = maskCanvas.getBoundingClientRect();
+  const stageRect = videoStage.getBoundingClientRect();
+  Object.assign(coverPreview.style, {
+    left: `${canvasRect.left - stageRect.left}px`,
+    top: `${canvasRect.top - stageRect.top}px`,
+    width: `${canvasRect.width}px`,
+    height: `${canvasRect.height}px`
+  });
+  coverPreview.classList.toggle('fit-cover', $('#coverFit').value === 'cover');
+  coverPreview.classList.toggle('fit-contain', $('#coverFit').value === 'contain');
+  coverPreview.classList.remove('hidden');
+}
+
+function clearCover() {
+  if (state.coverUrl) URL.revokeObjectURL(state.coverUrl);
+  state.coverFile = null;
+  state.coverUrl = null;
+  coverPreview.removeAttribute('src');
+  coverPreview.classList.add('hidden');
+  $('#coverInput').value = '';
+  $('#coverName').textContent = t('cover.empty');
+}
+
+$$('#coverPosition button').forEach(button => button.addEventListener('click', () => {
+  state.coverPosition = button.dataset.coverPosition;
+  $$('#coverPosition button').forEach(candidate => candidate.classList.toggle('active', candidate === button));
+  $('#stageHint').textContent = t(state.coverPosition === 'start' ? 'runtime.coverStart' : 'runtime.coverEnd');
+}));
+
+$('#coverDuration').addEventListener('input', event => {
+  $('#coverDurationValue').textContent = t('cover.seconds', { value: Number(event.target.value).toFixed(1) });
+});
+$('#coverFit').addEventListener('change', renderCover);
+
 function updateProcessButton() {
   const actionReady = state.operation === 'add'
     ? state.logoFile && state.logo
-    : (state.tool === 'rectangle' ? state.rect?.width >= 4 && state.rect?.height >= 4 : state.strokes.length > 0);
+    : state.operation === 'cover'
+      ? state.coverFile
+      : (state.tool === 'rectangle' ? state.rect?.width >= 4 && state.rect?.height >= 4 : state.strokes.length > 0);
   const ready = state.videoFile && (actionReady || trimChanged());
   $('#processButton').disabled = !ready;
 }
@@ -594,6 +667,7 @@ async function processVideo() {
 
   let inputPath;
   let logoPath;
+  let coverPath;
   let maskPath;
   const outputPath = 'logomend-output.mp4';
   try {
@@ -615,6 +689,14 @@ async function processVideo() {
       logoPath = `logo.${extensionOf(state.logoFile.name, 'png')}`;
       await ffmpeg.writeFile(logoPath, await fetchFile(state.logoFile));
       args = addLogoArguments(inputPath, logoPath, outputPath);
+    } else if (state.operation === 'cover' && state.coverFile) {
+      coverPath = `cover.${extensionOf(state.coverFile.name, 'jpg')}`;
+      await ffmpeg.writeFile(coverPath, await fetchFile(state.coverFile));
+      // FFmpeg.wasm uses one worker; keep probes sequential to avoid two
+      // commands competing for the same virtual process.
+      const fps = await probeFrameRate(ffmpeg, inputPath);
+      const hasAudio = await probeHasAudio(ffmpeg, inputPath);
+      args = coverArguments(inputPath, coverPath, outputPath, fps, hasAudio);
     } else if (state.operation === 'remove' && hasRemoval && state.method === 'opencv') {
       await processOpenCvVideo(ffmpeg, inputPath, outputPath);
       args = null;
@@ -649,13 +731,16 @@ async function processVideo() {
     setProgress(100);
     showOnly(resultView);
 
-    await safeDelete(ffmpeg, inputPath);
-    await safeDelete(ffmpeg, logoPath);
-    await safeDelete(ffmpeg, maskPath);
-    await safeDelete(ffmpeg, outputPath);
   } catch (error) {
     if (!state.cancelled) showError(t('runtime.failed', { message: error?.message || state.lastLog || 'Unknown error' }));
   } finally {
+    if (state.ffmpeg) {
+      await safeDelete(state.ffmpeg, inputPath);
+      await safeDelete(state.ffmpeg, logoPath);
+      await safeDelete(state.ffmpeg, coverPath);
+      await safeDelete(state.ffmpeg, maskPath);
+      await safeDelete(state.ffmpeg, outputPath);
+    }
     state.ignoreFfmpegProgress = false;
     stopElapsed();
   }
@@ -681,6 +766,44 @@ function addLogoArguments(inputPath, logoPath, outputPath) {
   const opacity = (Number($('#logoOpacity').value) / 100).toFixed(2);
   const filter = `[1:v]scale=${width}:-2,format=rgba,colorchannelmixer=aa=${opacity}[wm];[0:v][wm]overlay=${x}:${y}:format=auto[v]`;
   return [...videoInputArguments(inputPath), '-i', logoPath, '-filter_complex', filter, ...commonOutputArguments(outputPath)];
+}
+
+function coverArguments(inputPath, coverPath, outputPath, detectedFps, hasAudio) {
+  const width = Math.max(2, Math.floor(sourceVideo.videoWidth / 2) * 2);
+  const height = Math.max(2, Math.floor(sourceVideo.videoHeight / 2) * 2);
+  const mainDuration = Math.max(.1, state.trimEnd - state.trimStart);
+  const coverDuration = Math.max(1, Math.min(10, Number($('#coverDuration').value)));
+  const fps = Math.max(1, Math.min(60, detectedFps || 30)).toFixed(3);
+  const fitFilter = $('#coverFit').value === 'contain'
+    ? `scale=${width}:${height}:force_original_aspect_ratio=decrease:flags=lanczos,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2:color=black`
+    : `scale=${width}:${height}:force_original_aspect_ratio=increase:flags=lanczos,crop=${width}:${height}`;
+  const videoOrder = state.coverPosition === 'start'
+    ? '[coverv][mainv]'
+    : '[mainv][coverv]';
+  const filters = [
+    `[0:v]trim=duration=${mainDuration.toFixed(3)},setpts=PTS-STARTPTS,scale=${width}:${height}:flags=lanczos,setsar=1,fps=${fps}[mainv]`,
+    `[1:v]${fitFilter},setsar=1,fps=${fps},trim=duration=${coverDuration.toFixed(3)},setpts=PTS-STARTPTS[coverv]`,
+    `${videoOrder}concat=n=2:v=1:a=0[v]`
+  ];
+  const maps = ['-map', '[v]'];
+
+  if (hasAudio) {
+    filters.push(
+      `[0:a]atrim=duration=${mainDuration.toFixed(3)},asetpts=PTS-STARTPTS,aresample=48000,aformat=sample_rates=48000:channel_layouts=stereo[maina]`,
+      `anullsrc=r=48000:cl=stereo,atrim=duration=${coverDuration.toFixed(3)},asetpts=PTS-STARTPTS[silence]`,
+      `${state.coverPosition === 'start' ? '[silence][maina]' : '[maina][silence]'}concat=n=2:v=0:a=1[a]`
+    );
+    maps.push('-map', '[a]');
+  }
+
+  return [
+    ...videoInputArguments(inputPath), '-loop', '1', '-framerate', fps, '-i', coverPath,
+    '-filter_complex', filters.join(';'), ...maps,
+    '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', $('#qualitySelect').value,
+    '-pix_fmt', 'yuv420p',
+    ...(hasAudio ? ['-c:a', 'aac', '-b:a', '160k'] : []),
+    '-movflags', '+faststart', outputPath
+  ];
 }
 
 function delogoArguments(inputPath, outputPath) {
@@ -762,6 +885,22 @@ async function probeFrameRate(ffmpeg, inputPath) {
     return Number.isFinite(fps) ? Math.max(1, Math.min(30, fps)) : 25;
   } catch {
     return 25;
+  } finally {
+    await safeDelete(ffmpeg, probePath);
+  }
+}
+
+async function probeHasAudio(ffmpeg, inputPath) {
+  const probePath = 'audio-streams.txt';
+  try {
+    const result = await ffmpeg.ffprobe([
+      '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=index',
+      '-of', 'default=noprint_wrappers=1:nokey=1', inputPath, '-o', probePath
+    ]);
+    if (result !== 0) return false;
+    return String(await ffmpeg.readFile(probePath, 'utf8')).trim().length > 0;
+  } catch {
+    return false;
   } finally {
     await safeDelete(ffmpeg, probePath);
   }
@@ -973,6 +1112,7 @@ function resetAll() {
   revokeVideoUrl();
   clearSelection();
   clearLogo();
+  clearCover();
   state.videoFile = null;
   videoInput.value = '';
   if (state.outputUrl) URL.revokeObjectURL(state.outputUrl);

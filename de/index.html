@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logo im Video online entfernen oder hinzufügen | LogoMend Web</title>
-  <meta name="description" content="Logos mit Hintergrundrekonstruktion kostenlos im Browser entfernen oder eigene Logos hinzufügen. MP4, MOV, WebM, 720p bis 4K. Keine Server-Uploads.">
+  <meta name="description" content="Logos entfernen oder hinzufügen, Videos kürzen und Intro-/Outro-Bilder kostenlos im Browser einfügen. MP4, MOV, WebM, 720p bis 4K. Keine Server-Uploads.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="theme-color" content="#123e31">
   <link rel="canonical" href="https://mmomentlatch.github.io/logomend-web/de/">
@@ -21,7 +21,7 @@
   <meta property="og:url" content="https://mmomentlatch.github.io/logomend-web/de/">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mmomentlatch.github.io/logomend-web/#website","url":"https://mmomentlatch.github.io/logomend-web/","name":"LogoMend","inLanguage":["uk","en","pl","de"]},{"@type":"WebApplication","@id":"https://mmomentlatch.github.io/logomend-web/#webapp","name":"LogoMend Web","url":"https://mmomentlatch.github.io/logomend-web/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","browserRequirements":"A modern desktop browser with WebAssembly support","isAccessibleForFree":true,"description":"Browser-based video logo remover and logo overlay editor with local background restoration.","featureList":["Local in-browser video processing","Rectangle and brush masks","Smart FFmpeg removelogo restoration","OpenCV frame-by-frame inpainting","Custom PNG, JPG and WebP logo overlay","Video trimming","MP4 export"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чи завантажується відео на сервер?","acceptedAnswer":{"@type":"Answer","text":"Ні. LogoMend Web обробляє відео локально у вашому браузері за допомогою WebAssembly."}},{"@type":"Question","name":"Які формати підтримуються?","acceptedAnswer":{"@type":"Answer","text":"Найкраща сумісність: MP4, MOV і WebM. Результат експортується у MP4."}},{"@type":"Question","name":"Чи підтримується 4K?","acceptedAnswer":{"@type":"Answer","text":"Так, але 2K і 4K потребують багато оперативної пам'яті. Для великих або довгих відео рекомендована LogoMend Local."}}]}]}
+  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mmomentlatch.github.io/logomend-web/#website","url":"https://mmomentlatch.github.io/logomend-web/","name":"LogoMend","inLanguage":["uk","en","pl","de"]},{"@type":"WebApplication","@id":"https://mmomentlatch.github.io/logomend-web/#webapp","name":"LogoMend Web","url":"https://mmomentlatch.github.io/logomend-web/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","browserRequirements":"A modern desktop browser with WebAssembly support","isAccessibleForFree":true,"description":"Browser-based video logo remover and logo overlay editor with local background restoration.","featureList":["Local in-browser video processing","Rectangle and brush masks","Smart FFmpeg removelogo restoration","OpenCV frame-by-frame inpainting","Custom PNG, JPG and WebP logo overlay","Intro and outro image cards","Video trimming","MP4 export"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чи завантажується відео на сервер?","acceptedAnswer":{"@type":"Answer","text":"Ні. LogoMend Web обробляє відео локально у вашому браузері за допомогою WebAssembly."}},{"@type":"Question","name":"Які формати підтримуються?","acceptedAnswer":{"@type":"Answer","text":"Найкраща сумісність: MP4, MOV і WebM. Результат експортується у MP4."}},{"@type":"Question","name":"Чи підтримується 4K?","acceptedAnswer":{"@type":"Answer","text":"Так, але 2K і 4K потребують багато оперативної пам'яті. Для великих або довгих відео рекомендована LogoMend Local."}}]}]}
   </script>
   <script src="../ads-config.js"></script>
   <script type="module" src="/src/main.js"></script>
@@ -99,6 +99,7 @@
             <canvas id="maskCanvas"></canvas>
             <div id="rectSelection" class="rect-selection hidden"><span></span></div>
             <div id="logoOverlay" class="logo-overlay hidden"><img alt=""><span class="resize-handle"></span></div>
+            <img id="coverPreview" class="cover-preview hidden" alt="Попередній перегляд заставки">
             <div class="stage-hint" id="stageHint" data-i18n="stage.drawRect">Протягніть рамку поверх логотипа</div>
           </div>
           <div class="player-controls">
@@ -115,6 +116,7 @@
           <div class="operation-tabs" role="tablist">
             <button class="active" data-operation="remove" type="button"><span>⌫</span><b data-i18n="tabs.remove">Прибрати</b></button>
             <button data-operation="add" type="button"><span>＋</span><b data-i18n="tabs.add">Додати логотип</b></button>
+            <button data-operation="cover" type="button"><span>▣</span><b data-i18n="tabs.cover">Заставка</b></button>
           </div>
 
           <div id="removePanel" class="settings-panel">
@@ -151,6 +153,24 @@
               <div class="setting-title"><span>02</span><div><strong data-i18n="add.positionTitle">Розташуйте на кадрі</strong><small data-i18n="add.positionText">Перетягніть логотип у потрібне місце</small></div></div>
               <label class="range-row"><span><b data-i18n="add.size">Розмір</b><output id="logoSizeValue">22%</output></span><input id="logoSize" type="range" min="5" max="60" value="22"></label>
               <label class="range-row"><span><b data-i18n="add.opacity">Прозорість</b><output id="logoOpacityValue">90%</output></span><input id="logoOpacity" type="range" min="10" max="100" value="90"></label>
+            </section>
+          </div>
+
+          <div id="coverPanel" class="settings-panel hidden">
+            <section class="setting-group">
+              <div class="setting-title"><span>01</span><div><strong data-i18n="cover.uploadTitle">Завантажте зображення</strong><small data-i18n="cover.uploadText">Для YouTube радимо 16:9 · 1280×720 або 1920×1080</small></div></div>
+              <input id="coverInput" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" hidden>
+              <button id="chooseCover" class="logo-upload-button" type="button"><span>＋</span><b data-i18n="cover.choose">Обрати JPG, PNG або WebP</b></button>
+              <p id="coverName" class="selection-summary" data-i18n="cover.empty">Зображення ще не вибрано</p>
+            </section>
+            <section class="setting-group">
+              <div class="setting-title"><span>02</span><div><strong data-i18n="cover.positionTitle">Де показати заставку</strong><small data-i18n="cover.positionText">Додайте її перед відео або після нього</small></div></div>
+              <div class="segmented" id="coverPosition">
+                <button class="active" data-cover-position="start" type="button" data-i18n="cover.start">На початку</button>
+                <button data-cover-position="end" type="button" data-i18n="cover.end">У кінці</button>
+              </div>
+              <label class="range-row"><span><b data-i18n="cover.duration">Тривалість</b><output id="coverDurationValue">3.0 с</output></span><input id="coverDuration" type="range" min="1" max="10" step="0.5" value="3"></label>
+              <label class="select-row"><span data-i18n="cover.fitLabel">Заповнення кадру</span><select id="coverFit"><option value="cover" data-i18n="cover.fitCover">На весь кадр · краї можуть обрізатися</option><option value="contain" data-i18n="cover.fitContain">Показати повністю · можливі поля</option></select></label>
             </section>
           </div>
 
@@ -193,7 +213,7 @@
       <div id="resultView" class="result-view hidden">
         <div class="result-copy"><span class="result-check">✓</span><div><p class="eyebrow"><span></span><span data-i18n="result.eyebrow">ГОТОВО</span></p><h2 data-i18n="result.title">Нове відео готове</h2><p data-i18n="result.text">Перегляньте результат і збережіть MP4-копію на пристрій.</p></div></div>
         <video id="resultVideo" controls playsinline></video>
-        <div class="next-step-card"><span>02</span><div><strong data-i18n="result.nextTitle">Хочете продовжити?</strong><small data-i18n="result.nextText">Використайте готовий результат як нове відео: додайте свій логотип, обріжте початок або кінець.</small></div><button id="continueEditing" class="secondary-button" type="button" data-i18n="result.continue">Додати логотип або обрізати</button></div>
+        <div class="next-step-card"><span>02</span><div><strong data-i18n="result.nextTitle">Хочете продовжити?</strong><small data-i18n="result.nextText">Використайте результат як нове відео: додайте логотип, заставку на початок чи кінець або обріжте ролик.</small></div><button id="continueEditing" class="secondary-button" type="button" data-i18n="result.continue">Продовжити редагування</button></div>
         <div class="result-actions"><a id="downloadButton" class="primary-button" download="logomend-result.mp4" data-i18n="result.download">Завантажити MP4</a><button id="editAgain" class="secondary-button" type="button" data-i18n="result.back">Змінити цей крок</button><button id="newVideo" class="text-button" type="button" data-i18n="result.new">Інше відео</button></div>
       </div>
 
