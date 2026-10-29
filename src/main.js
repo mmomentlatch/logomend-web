@@ -692,11 +692,8 @@ async function processVideo() {
     } else if (state.operation === 'cover' && state.coverFile) {
       coverPath = `cover.${extensionOf(state.coverFile.name, 'jpg')}`;
       await ffmpeg.writeFile(coverPath, await fetchFile(state.coverFile));
-      // FFmpeg.wasm uses one worker; keep probes sequential to avoid two
-      // commands competing for the same virtual process.
       const fps = await probeFrameRate(ffmpeg, inputPath);
-      const hasAudio = await probeHasAudio(ffmpeg, inputPath);
-      args = coverArguments(inputPath, coverPath, outputPath, fps, hasAudio);
+      args = coverArguments(inputPath, coverPath, outputPath, fps);
     } else if (state.operation === 'remove' && hasRemoval && state.method === 'opencv') {
       await processOpenCvVideo(ffmpeg, inputPath, outputPath);
       args = null;
@@ -768,11 +765,12 @@ function addLogoArguments(inputPath, logoPath, outputPath) {
   return [...videoInputArguments(inputPath), '-i', logoPath, '-filter_complex', filter, ...commonOutputArguments(outputPath)];
 }
 
-function coverArguments(inputPath, coverPath, outputPath, detectedFps, hasAudio) {
+function coverArguments(inputPath, coverPath, outputPath, detectedFps) {
   const width = Math.max(2, Math.floor(sourceVideo.videoWidth / 2) * 2);
   const height = Math.max(2, Math.floor(sourceVideo.videoHeight / 2) * 2);
   const mainDuration = Math.max(.1, state.trimEnd - state.trimStart);
   const coverDuration = Math.max(1, Math.min(10, Number($('#coverDuration').value)));
+  const totalDuration = mainDuration + coverDuration;
   const fps = Math.max(1, Math.min(60, detectedFps || 30)).toFixed(3);
   const fitFilter = $('#coverFit').value === 'contain'
     ? `scale=${width}:${height}:force_original_aspect_ratio=decrease:flags=lanczos,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2:color=black`
@@ -785,23 +783,16 @@ function coverArguments(inputPath, coverPath, outputPath, detectedFps, hasAudio)
     `[1:v]${fitFilter},setsar=1,fps=${fps},trim=duration=${coverDuration.toFixed(3)},setpts=PTS-STARTPTS[coverv]`,
     `${videoOrder}concat=n=2:v=1:a=0[v]`
   ];
-  const maps = ['-map', '[v]'];
-
-  if (hasAudio) {
-    filters.push(
-      `[0:a]atrim=duration=${mainDuration.toFixed(3)},asetpts=PTS-STARTPTS,aresample=48000,aformat=sample_rates=48000:channel_layouts=stereo[maina]`,
-      `anullsrc=r=48000:cl=stereo,atrim=duration=${coverDuration.toFixed(3)},asetpts=PTS-STARTPTS[silence]`,
-      `${state.coverPosition === 'start' ? '[silence][maina]' : '[maina][silence]'}concat=n=2:v=0:a=1[a]`
-    );
-    maps.push('-map', '[a]');
-  }
+  const audioFilter = state.coverPosition === 'start'
+    ? `adelay=${Math.round(coverDuration * 1000)}:all=1,apad=pad_dur=${coverDuration.toFixed(3)}`
+    : `apad=pad_dur=${coverDuration.toFixed(3)}`;
 
   return [
     ...videoInputArguments(inputPath), '-loop', '1', '-framerate', fps, '-i', coverPath,
-    '-filter_complex', filters.join(';'), ...maps,
+    '-filter_complex', filters.join(';'), '-map', '[v]', '-map', '0:a?',
     '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', $('#qualitySelect').value,
-    '-pix_fmt', 'yuv420p',
-    ...(hasAudio ? ['-c:a', 'aac', '-b:a', '160k'] : []),
+    '-pix_fmt', 'yuv420p', '-af', audioFilter, '-c:a', 'aac', '-b:a', '160k',
+    '-t', totalDuration.toFixed(3),
     '-movflags', '+faststart', outputPath
   ];
 }
@@ -885,22 +876,6 @@ async function probeFrameRate(ffmpeg, inputPath) {
     return Number.isFinite(fps) ? Math.max(1, Math.min(30, fps)) : 25;
   } catch {
     return 25;
-  } finally {
-    await safeDelete(ffmpeg, probePath);
-  }
-}
-
-async function probeHasAudio(ffmpeg, inputPath) {
-  const probePath = 'audio-streams.txt';
-  try {
-    const result = await ffmpeg.ffprobe([
-      '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=index',
-      '-of', 'default=noprint_wrappers=1:nokey=1', inputPath, '-o', probePath
-    ]);
-    if (result !== 0) return false;
-    return String(await ffmpeg.readFile(probePath, 'utf8')).trim().length > 0;
-  } catch {
-    return false;
   } finally {
     await safeDelete(ffmpeg, probePath);
   }
