@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Видалити або додати логотип у відео онлайн | LogoMend Web</title>
-  <meta name="description" content="Безкоштовно видаляйте логотипи, додавайте власні логотипи, заставки на початок чи кінець та обрізайте відео прямо в браузері. MP4, MOV і WebM, 720p–4K. Без завантаження на сервер.">
+  <title>Видалити логотип і обрізати відео онлайн | LogoMend</title>
+  <meta name="description" content="Безкоштовно видаляйте логотипи з відео, додавайте власний логотип, точно обрізайте відео та вставляйте заставку на початок або кінець. MP4, MOV, WebM, 720p–4K.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="theme-color" content="#123e31">
   <link rel="canonical" href="https://mmomentlatch.github.io/logomend-web/">
@@ -16,12 +16,12 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LogoMend">
-  <meta property="og:title" content="LogoMend Web — приватний редактор логотипів у відео">
-  <meta property="og:description" content="Обробляйте відео локально у браузері: без реєстрації, хмари й передачі файлів.">
+  <meta property="og:title" content="Видалення логотипа, обрізання відео та заставки | LogoMend">
+  <meta property="og:description" content="Видаляйте й додавайте логотипи, точно обрізайте відео та вставляйте зображення на початок або кінець — локально у браузері.">
   <meta property="og:url" content="https://mmomentlatch.github.io/logomend-web/">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mmomentlatch.github.io/logomend-web/#website","url":"https://mmomentlatch.github.io/logomend-web/","name":"LogoMend","inLanguage":["uk","en","pl","de"]},{"@type":"WebApplication","@id":"https://mmomentlatch.github.io/logomend-web/#webapp","name":"LogoMend Web","url":"https://mmomentlatch.github.io/logomend-web/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","browserRequirements":"A modern desktop browser with WebAssembly support","isAccessibleForFree":true,"description":"Browser-based video logo remover and logo overlay editor with local background restoration.","featureList":["Local in-browser video processing","Rectangle and brush masks","Smart FFmpeg removelogo restoration","OpenCV frame-by-frame inpainting","Custom PNG, JPG and WebP logo overlay","Intro and outro image cards","Video trimming","MP4 export"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чи завантажується відео на сервер?","acceptedAnswer":{"@type":"Answer","text":"Ні. LogoMend Web обробляє відео локально у вашому браузері за допомогою WebAssembly."}},{"@type":"Question","name":"Які формати підтримуються?","acceptedAnswer":{"@type":"Answer","text":"Найкраща сумісність: MP4, MOV і WebM. Результат експортується у MP4."}},{"@type":"Question","name":"Чи підтримується 4K?","acceptedAnswer":{"@type":"Answer","text":"Так, але 2K і 4K потребують багато оперативної пам'яті. Для великих або довгих відео рекомендована LogoMend Local."}}]}]}
+  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mmomentlatch.github.io/logomend-web/#website","url":"https://mmomentlatch.github.io/logomend-web/","name":"LogoMend","inLanguage":["uk","en","pl","de"]},{"@type":["WebApplication","SoftwareApplication"],"@id":"https://mmomentlatch.github.io/logomend-web/#webapp","name":"LogoMend Web","url":"https://mmomentlatch.github.io/logomend-web/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","browserRequirements":"A modern desktop browser with WebAssembly support","isAccessibleForFree":true,"description":"Free local browser video editor for removing and adding logos, precise trimming, and adding intro or outro images.","featureList":["Local in-browser video processing","Video logo and watermark removal with rectangle or brush masks","Smart FFmpeg removelogo restoration","OpenCV frame-by-frame inpainting","Custom PNG, JPG and WebP logo overlay","Intro and outro image cards with fast H.264 MP4 stream copy","Precise video trimming by slider or minutes and seconds","MP4 export in 720p, 1080p, 2K and 4K"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чи завантажується відео на сервер?","acceptedAnswer":{"@type":"Answer","text":"Ні. LogoMend Web обробляє відео локально у вашому браузері за допомогою WebAssembly."}},{"@type":"Question","name":"Які формати підтримуються?","acceptedAnswer":{"@type":"Answer","text":"Найкраща сумісність: MP4, MOV і WebM. Результат експортується у MP4."}},{"@type":"Question","name":"Чи підтримується 4K?","acceptedAnswer":{"@type":"Answer","text":"Так, але 2K і 4K потребують багато оперативної пам'яті. Для великих або довгих відео рекомендована LogoMend Local."}},{"@type":"Question","name":"Чи можна додати заставку та точно обрізати відео?","acceptedAnswer":{"@type":"Answer","text":"Так. Додайте JPG, PNG або WebP на початок чи кінець, задайте тривалість заставки й точний час обрізання у хвилинах та секундах."}}]}]}
   </script>
   <script src="./ads-config.js"></script>
   <script type="module" src="/src/main.js"></script>
@@ -53,7 +53,7 @@
       <div class="hero-copy">
         <p class="eyebrow"><span></span><span data-i18n="hero.eyebrow">БЕЗКОШТОВНО · ПРЯМО У БРАУЗЕРІ</span></p>
         <h1 data-i18n-html="hero.title">Приберіть старий логотип.<br><em>Додайте свій.</em></h1>
-        <p class="hero-lead" data-i18n="hero.lead">LogoMend Web обробляє відео на вашому пристрої. Ніяких завантажень у хмару, реєстрації чи абонплати.</p>
+        <p class="hero-lead" data-i18n="hero.lead">Видаляйте або додавайте логотипи, точно обрізайте відео та вставляйте заставку на початок чи кінець. Усе безкоштовно й локально у браузері.</p>
         <div class="hero-actions">
           <a class="primary-button" href="#editor" data-i18n="hero.cta">Обробити відео</a>
           <span class="compat"><b>MP4</b><b>MOV</b><b>WEBM</b><b>720p—4K</b></span>
@@ -244,9 +244,9 @@
     </section>
 
     <section class="compare-section">
-      <div><p class="eyebrow"><span></span><span data-i18n="compare.eyebrow">ДВА ПРОДУКТИ</span></p><h2 data-i18n="compare.title">Web для зручності.<br>Local для максимальної потужності.</h2><p data-i18n="compare.text">Браузерна версія ідеальна для коротких відео та швидких правок. Для довгих 2K/4K-файлів і AI-відновлення STTN використовуйте LogoMend Local.</p></div>
+      <div><p class="eyebrow"><span></span><span data-i18n="compare.eyebrow">ДВА ПРОДУКТИ</span></p><h2 data-i18n-html="compare.title">Web для зручності.<br>Local для максимальної потужності.</h2><p data-i18n="compare.text">Браузерна версія ідеальна для коротких відео та швидких правок. Для довгих 2K/4K-файлів і AI-відновлення STTN використовуйте LogoMend Local.</p></div>
       <div class="compare-cards">
-        <article class="featured"><span>WEB</span><h3>LogoMend Web</h3><ul><li data-i18n="compare.web1">Без встановлення</li><li data-i18n="compare.web2">Обробка у браузері</li><li data-i18n="compare.web3">FFmpeg, OpenCV і власний логотип</li></ul><b data-i18n="compare.current">Ви тут</b></article>
+        <article class="featured"><span>WEB</span><h3>LogoMend Web</h3><ul><li data-i18n="compare.web1">Без встановлення</li><li data-i18n="compare.web2">Обробка у браузері</li><li data-i18n="compare.web3">Видалення й додавання логотипів, обрізання та заставки</li></ul><b data-i18n="compare.current">Ви тут</b></article>
         <article><span>LOCAL</span><h3>LogoMend Local</h3><ul><li data-i18n="compare.local1">Для великих файлів</li><li data-i18n="compare.local2">STTN та багатокадрові режими</li><li data-i18n="compare.local3">Швидше на потужному ПК</li></ul><a href="./downloads/" data-i18n="compare.download">Завантажити для Windows →</a></article>
       </div>
     </section>
@@ -259,6 +259,7 @@
         <details><summary data-i18n="faq.q3">Чому Web-версія повільніша за Local?</summary><p data-i18n="faq.a3">Браузер ізолює обробку та має суворіші обмеження пам’яті. Local використовує нативний FFmpeg і краще підходить для великих файлів.</p></details>
         <details><summary data-i18n="faq.q4">Чи зникне логотип абсолютно непомітно?</summary><p data-i18n="faq.a4">Результат залежить від фону, руху та розміру логотипа. OpenCV і FFmpeg відновлюють область із сусідніх пікселів; для дуже складного рухомого фону краще використовувати AI-режими Local.</p></details>
         <details><summary data-i18n="faq.q5">Чи можна видаляти будь-які водяні знаки?</summary><p data-i18n="faq.a5">Обробляйте лише власні матеріали або відео, на редагування яких маєте дозвіл. Видалення чужих позначок авторства може порушувати права.</p></details>
+        <details><summary data-i18n="faq.q6">Чи можна додати заставку та точно обрізати відео?</summary><p data-i18n="faq.a6">Так. Додайте JPG, PNG або WebP на початок чи кінець, задайте тривалість заставки й точний час обрізання у хвилинах та секундах.</p></details>
       </div>
     </section>
   </main>

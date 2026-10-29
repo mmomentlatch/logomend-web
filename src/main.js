@@ -1,5 +1,5 @@
 import './styles.css';
-import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { FFmpeg, FFFSType } from '@ffmpeg/ffmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import { applyTranslations, createTranslator, languageFromPage } from './i18n.js';
 import { initializeAds } from './ads.js';
@@ -706,6 +706,7 @@ async function processVideo() {
   $('#progressDetail').textContent = t('progress.loadingText');
 
   let inputPath;
+  let inputAttachment;
   let logoPath;
   let coverPath;
   let maskPath;
@@ -716,9 +717,8 @@ async function processVideo() {
     setProgress(8);
     $('#progressTitle').textContent = t('runtime.reading');
     $('#progressDetail').textContent = state.videoFile.name;
-    const videoExtension = extensionOf(state.videoFile.name, 'mp4');
-    inputPath = `input.${videoExtension}`;
-    await ffmpeg.writeFile(inputPath, await fetchFile(state.videoFile));
+    inputAttachment = await attachInputFile(ffmpeg, state.videoFile);
+    inputPath = inputAttachment.path;
     if (state.cancelled) return;
 
     let args;
@@ -732,8 +732,12 @@ async function processVideo() {
     } else if (state.operation === 'cover' && state.coverFile) {
       coverPath = `cover.${extensionOf(state.coverFile.name, 'jpg')}`;
       await ffmpeg.writeFile(coverPath, await fetchFile(state.coverFile));
-      const fps = await probeFrameRate(ffmpeg, inputPath);
-      args = coverArguments(inputPath, coverPath, outputPath, fps);
+      const media = await probeMedia(ffmpeg, inputPath);
+      const fps = frameRateFromMedia(media);
+      const usedFastCover = isFastCoverCompatible(media, state.videoFile.name)
+        ? await processFastCover(ffmpeg, inputPath, coverPath, outputPath, media, fps)
+        : false;
+      args = usedFastCover ? null : coverArguments(inputPath, coverPath, outputPath, fps);
     } else if (state.operation === 'remove' && hasRemoval && state.method === 'opencv') {
       await processOpenCvVideo(ffmpeg, inputPath, outputPath);
       args = null;
@@ -772,7 +776,7 @@ async function processVideo() {
     if (!state.cancelled) showError(t('runtime.failed', { message: error?.message || state.lastLog || 'Unknown error' }));
   } finally {
     if (state.ffmpeg) {
-      await safeDelete(state.ffmpeg, inputPath);
+      await detachInputFile(state.ffmpeg, inputAttachment);
       await safeDelete(state.ffmpeg, logoPath);
       await safeDelete(state.ffmpeg, coverPath);
       await safeDelete(state.ffmpeg, maskPath);
@@ -781,6 +785,38 @@ async function processVideo() {
     state.ignoreFfmpegProgress = false;
     stopElapsed();
   }
+}
+
+async function attachInputFile(ffmpeg, file) {
+  const directory = 'source-media';
+  const path = `${directory}/input.${extensionOf(file.name, 'mp4')}`;
+  try {
+    await safeDeleteDir(ffmpeg, directory);
+    await ffmpeg.createDir(directory);
+    await ffmpeg.mount(FFFSType.WORKERFS, { blobs: [{ name: path.split('/').pop(), data: file }] }, directory);
+    return { path, directory, mounted: true };
+  } catch {
+    try { await ffmpeg.unmount(directory); } catch { /* Mount may not have completed. */ }
+    await safeDeleteDir(ffmpeg, directory);
+    const fallbackPath = `input.${extensionOf(file.name, 'mp4')}`;
+    await ffmpeg.writeFile(fallbackPath, await fetchFile(file));
+    return { path: fallbackPath, mounted: false };
+  }
+}
+
+async function detachInputFile(ffmpeg, attachment) {
+  if (!attachment) return;
+  if (!attachment.mounted) {
+    await safeDelete(ffmpeg, attachment.path);
+    return;
+  }
+  try { await ffmpeg.unmount(attachment.directory); } catch { /* The engine may have been cancelled. */ }
+  await safeDeleteDir(ffmpeg, attachment.directory);
+}
+
+async function safeDeleteDir(ffmpeg, path) {
+  if (!path) return;
+  try { await ffmpeg.deleteDir(path); } catch { /* Directory may not exist or may still be mounted. */ }
 }
 
 function commonOutputArguments(outputPath) {
@@ -835,6 +871,126 @@ function coverArguments(inputPath, coverPath, outputPath, detectedFps) {
     '-t', totalDuration.toFixed(3),
     '-movflags', '+faststart', outputPath
   ];
+}
+
+async function probeMedia(ffmpeg, inputPath, probePath = 'media-probe.json') {
+  try {
+    const exitCode = await ffmpeg.ffprobe([
+      '-v', 'error', '-show_streams', '-show_format', '-of', 'json', inputPath, '-o', probePath
+    ]);
+    if (exitCode !== 0) return null;
+    return JSON.parse(String(await ffmpeg.readFile(probePath, 'utf8')));
+  } catch {
+    return null;
+  } finally {
+    await safeDelete(ffmpeg, probePath);
+  }
+}
+
+function frameRateFromMedia(media) {
+  const video = media?.streams?.find(stream => stream.codec_type === 'video');
+  const value = video?.avg_frame_rate || video?.r_frame_rate || '25/1';
+  const [numerator, denominator = '1'] = String(value).split('/').map(Number);
+  const fps = numerator / denominator;
+  return Number.isFinite(fps) && fps > 0 ? Math.max(1, Math.min(60, fps)) : 25;
+}
+
+function isFastCoverCompatible(media, fileName) {
+  if (!media || trimChanged() || !/\.(mp4|m4v|mov)$/i.test(fileName)) return false;
+  const video = media.streams?.find(stream => stream.codec_type === 'video');
+  const audio = media.streams?.find(stream => stream.codec_type === 'audio');
+  return video?.codec_name === 'h264'
+    && video.pix_fmt === 'yuv420p'
+    && Number(video.width) % 2 === 0
+    && Number(video.height) % 2 === 0
+    && (!audio || (audio.codec_name === 'aac' && Number(audio.channels || 2) <= 2));
+}
+
+async function processFastCover(ffmpeg, inputPath, coverPath, outputPath, media, detectedFps) {
+  const coverSegment = 'cover-segment.ts';
+  const mainSegment = 'main-segment.ts';
+  const concatList = 'cover-concat.txt';
+  const video = media.streams.find(stream => stream.codec_type === 'video');
+  const audio = media.streams.find(stream => stream.codec_type === 'audio');
+  const width = Number(video.width);
+  const height = Number(video.height);
+  const coverDuration = Math.max(1, Math.min(10, Number($('#coverDuration').value)));
+  const fps = Math.max(1, Math.min(60, detectedFps || 25)).toFixed(3);
+  const fitFilter = $('#coverFit').value === 'contain'
+    ? `scale=${width}:${height}:force_original_aspect_ratio=decrease:flags=lanczos,pad=${width}:${height}:(ow-iw)/2:(oh-ih)/2:color=black`
+    : `scale=${width}:${height}:force_original_aspect_ratio=increase:flags=lanczos,crop=${width}:${height}`;
+
+  state.ignoreFfmpegProgress = true;
+  $('#progressTitle').textContent = t('runtime.fastCover');
+  $('#progressDetail').textContent = t('runtime.fastCoverText');
+  try {
+    setProgress(18);
+    const coverArgs = ['-loop', '1', '-framerate', fps, '-i', coverPath];
+    if (audio) {
+      const sampleRate = Math.max(8000, Math.min(96000, Number(audio.sample_rate) || 48000));
+      const channelLayout = Number(audio.channels) === 1 ? 'mono' : 'stereo';
+      coverArgs.push('-f', 'lavfi', '-i', `anullsrc=channel_layout=${channelLayout}:sample_rate=${sampleRate}`);
+    }
+    coverArgs.push(
+      '-t', coverDuration.toFixed(3), '-vf', `${fitFilter},setsar=1,fps=${fps}`,
+      '-map', '0:v:0'
+    );
+    if (audio) coverArgs.push('-map', '1:a:0');
+    coverArgs.push(
+      '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', $('#qualitySelect').value,
+      '-pix_fmt', 'yuv420p'
+    );
+    if (audio) coverArgs.push('-c:a', 'aac', '-b:a', '160k', '-ar', String(Number(audio.sample_rate) || 48000));
+    coverArgs.push('-f', 'mpegts', coverSegment);
+    await execOrThrow(ffmpeg, coverArgs);
+
+    setProgress(48);
+    await execOrThrow(ffmpeg, [
+      '-i', inputPath, '-map', '0:v:0', '-map', '0:a?', '-c', 'copy',
+      '-bsf:v', 'h264_mp4toannexb', '-f', 'mpegts', mainSegment
+    ]);
+
+    setProgress(72);
+    const order = state.coverPosition === 'start'
+      ? [coverSegment, mainSegment]
+      : [mainSegment, coverSegment];
+    await ffmpeg.writeFile(concatList, new TextEncoder().encode(order.map(path => `file '${path}'`).join('\n')));
+    const concatArgs = [
+      '-fflags', '+genpts', '-f', 'concat', '-safe', '0', '-i', concatList,
+      '-map', '0:v:0', '-map', '0:a?', '-c', 'copy'
+    ];
+    if (audio) concatArgs.push('-bsf:a', 'aac_adtstoasc');
+    concatArgs.push('-avoid_negative_ts', 'make_zero', '-movflags', '+faststart', outputPath);
+    await execOrThrow(ffmpeg, concatArgs);
+
+    setProgress(90);
+    const result = await probeMedia(ffmpeg, outputPath, 'fast-cover-result.json');
+    const resultVideo = result?.streams?.find(stream => stream.codec_type === 'video');
+    const resultAudio = result?.streams?.find(stream => stream.codec_type === 'audio');
+    const sourceDuration = Number(media.format?.duration || video.duration || sourceVideo.duration);
+    const resultDuration = Number(result?.format?.duration || resultVideo?.duration);
+    if (!resultVideo || (audio && !resultAudio) || !Number.isFinite(resultDuration)
+      || resultDuration < sourceDuration + coverDuration - 1.5) {
+      throw new Error('Fast cover validation failed');
+    }
+    return true;
+  } catch (error) {
+    await safeDelete(ffmpeg, outputPath);
+    $('#progressTitle').textContent = t('runtime.fastCoverFallback');
+    $('#progressDetail').textContent = t('runtime.processing');
+    return false;
+  } finally {
+    await safeDelete(ffmpeg, coverSegment);
+    await safeDelete(ffmpeg, mainSegment);
+    await safeDelete(ffmpeg, concatList);
+    state.ignoreFfmpegProgress = false;
+  }
+}
+
+async function execOrThrow(ffmpeg, args) {
+  state.lastLog = '';
+  const exitCode = await ffmpeg.exec(args);
+  if (exitCode !== 0) throw new Error(state.lastLog || `FFmpeg exited with code ${exitCode}`);
 }
 
 function delogoArguments(inputPath, outputPath) {

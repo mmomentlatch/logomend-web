@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logo im Video online entfernen oder hinzufügen | LogoMend Web</title>
-  <meta name="description" content="Logos entfernen oder hinzufügen, Videos kürzen und Intro-/Outro-Bilder kostenlos im Browser einfügen. MP4, MOV, WebM, 720p bis 4K. Keine Server-Uploads.">
+  <title>Logo entfernen, Video kürzen & Intro einfügen | LogoMend</title>
+  <meta name="description" content="Logos entfernen oder hinzufügen, Videos präzise kürzen und Intro-/Outro-Bilder kostenlos im Browser einfügen. MP4, MOV, WebM, 720p–4K.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="theme-color" content="#123e31">
   <link rel="canonical" href="https://mmomentlatch.github.io/logomend-web/de/">
@@ -16,12 +16,12 @@
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LogoMend">
-  <meta property="og:title" content="LogoMend Web — privater Video-Logo-Editor im Browser">
-  <meta property="og:description" content="Videos lokal im Browser bearbeiten: ohne Anmeldung, Cloud-Upload oder Abonnement.">
+  <meta property="og:title" content="Logo entfernen, Video kürzen und Intro/Outro einfügen | LogoMend">
+  <meta property="og:description" content="Logos entfernen oder hinzufügen, präzise kürzen und Bilder am Anfang oder Ende einfügen — lokal im Browser.">
   <meta property="og:url" content="https://mmomentlatch.github.io/logomend-web/de/">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mmomentlatch.github.io/logomend-web/#website","url":"https://mmomentlatch.github.io/logomend-web/","name":"LogoMend","inLanguage":["uk","en","pl","de"]},{"@type":"WebApplication","@id":"https://mmomentlatch.github.io/logomend-web/#webapp","name":"LogoMend Web","url":"https://mmomentlatch.github.io/logomend-web/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","browserRequirements":"A modern desktop browser with WebAssembly support","isAccessibleForFree":true,"description":"Browser-based video logo remover and logo overlay editor with local background restoration.","featureList":["Local in-browser video processing","Rectangle and brush masks","Smart FFmpeg removelogo restoration","OpenCV frame-by-frame inpainting","Custom PNG, JPG and WebP logo overlay","Intro and outro image cards","Video trimming","MP4 export"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чи завантажується відео на сервер?","acceptedAnswer":{"@type":"Answer","text":"Ні. LogoMend Web обробляє відео локально у вашому браузері за допомогою WebAssembly."}},{"@type":"Question","name":"Які формати підтримуються?","acceptedAnswer":{"@type":"Answer","text":"Найкраща сумісність: MP4, MOV і WebM. Результат експортується у MP4."}},{"@type":"Question","name":"Чи підтримується 4K?","acceptedAnswer":{"@type":"Answer","text":"Так, але 2K і 4K потребують багато оперативної пам'яті. Для великих або довгих відео рекомендована LogoMend Local."}}]}]}
+  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mmomentlatch.github.io/logomend-web/#website","url":"https://mmomentlatch.github.io/logomend-web/","name":"LogoMend","inLanguage":["uk","en","pl","de"]},{"@type":["WebApplication","SoftwareApplication"],"@id":"https://mmomentlatch.github.io/logomend-web/#webapp","name":"LogoMend Web","url":"https://mmomentlatch.github.io/logomend-web/","applicationCategory":"MultimediaApplication","operatingSystem":"Any","browserRequirements":"A modern desktop browser with WebAssembly support","isAccessibleForFree":true,"description":"Kostenloser lokaler Videoeditor im Browser zum Entfernen und Hinzufügen von Logos, präzisen Kürzen und Einfügen von Intro- oder Outro-Bildern.","featureList":["Local in-browser video processing","Video logo and watermark removal with rectangle or brush masks","Smart FFmpeg removelogo restoration","OpenCV frame-by-frame inpainting","Custom PNG, JPG and WebP logo overlay","Intro and outro image cards with fast H.264 MP4 stream copy","Precise video trimming by slider or minutes and seconds","MP4 export in 720p, 1080p, 2K and 4K"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"de"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Wird mein Video auf einen Server hochgeladen?","acceptedAnswer":{"@type":"Answer","text":"Nein. LogoMend Web verarbeitet Videos mit WebAssembly lokal in Ihrem Browser."}},{"@type":"Question","name":"Welche Formate werden unterstützt?","acceptedAnswer":{"@type":"Answer","text":"MP4, MOV und WebM bieten die beste Kompatibilität. Das Ergebnis wird als MP4 exportiert."}},{"@type":"Question","name":"Wird 4K unterstützt?","acceptedAnswer":{"@type":"Answer","text":"Ja, aber 2K und 4K benötigen viel Arbeitsspeicher. Für große oder lange Videos wird LogoMend Local empfohlen."}},{"@type":"Question","name":"Kann ich ein Intro oder Outro hinzufügen und genau kürzen?","acceptedAnswer":{"@type":"Answer","text":"Ja. Fügen Sie JPG, PNG oder WebP am Anfang oder Ende ein, wählen Sie die Dauer und geben Sie die genaue Schnittzeit in Minuten und Sekunden ein."}}],"inLanguage":"de"}]}
   </script>
   <script src="../ads-config.js"></script>
   <script type="module" src="/src/main.js"></script>
@@ -33,14 +33,14 @@
       <span><strong>LogoMend</strong><small>WEB EDITION</small></span>
     </a>
     <nav class="header-nav" aria-label="Основна навігація">
-      <a href="#editor" data-i18n="nav.editor">Редактор</a>
-      <a href="#how" data-i18n="nav.how">Як це працює</a>
-      <a href="#faq" data-i18n="nav.faq">Запитання</a>
+      <a href="#editor" data-i18n="nav.editor">Editor</a>
+      <a href="#how" data-i18n="nav.how">So funktioniert es</a>
+      <a href="#faq" data-i18n="nav.faq">Fragen</a>
     </nav>
     <div class="header-actions">
-      <span class="privacy-pill"><i></i><span data-i18n="header.private">Файли залишаються на пристрої</span></span>
+      <span class="privacy-pill"><i></i><span data-i18n="header.private">Dateien bleiben auf Ihrem Gerät</span></span>
       <label class="language-label">
-        <span class="sr-only" data-i18n="header.language">Мова</span>
+        <span class="sr-only" data-i18n="header.language">Sprache</span>
         <select id="languageSelect" aria-label="Мова">
           <option value="uk">UA</option><option value="en">EN</option><option value="pl">PL</option><option value="de">DE</option>
         </select>
@@ -51,11 +51,11 @@
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow"><span></span><span data-i18n="hero.eyebrow">БЕЗКОШТОВНО · ПРЯМО У БРАУЗЕРІ</span></p>
-        <h1 data-i18n-html="hero.title">Приберіть старий логотип.<br><em>Додайте свій.</em></h1>
-        <p class="hero-lead" data-i18n="hero.lead">LogoMend Web обробляє відео на вашому пристрої. Ніяких завантажень у хмару, реєстрації чи абонплати.</p>
+        <p class="eyebrow"><span></span><span data-i18n="hero.eyebrow">KOSTENLOS · DIREKT IM BROWSER</span></p>
+        <h1 data-i18n-html="hero.title">Altes Logo entfernen.<br><em>Eigenes hinzufügen.</em></h1>
+        <p class="hero-lead" data-i18n="hero.lead">Logos entfernen oder hinzufügen, Videos präzise kürzen und Intro- oder Outro-Bilder einfügen. Kostenlos und lokal im Browser.</p>
         <div class="hero-actions">
-          <a class="primary-button" href="#editor" data-i18n="hero.cta">Обробити відео</a>
+          <a class="primary-button" href="#editor" data-i18n="hero.cta">Video bearbeiten</a>
           <span class="compat"><b>MP4</b><b>MOV</b><b>WEBM</b><b>720p—4K</b></span>
         </div>
       </div>
@@ -66,30 +66,30 @@
           <div class="mock-logo">OLD LOGO</div><div class="selection-loop"></div>
           <div class="mock-toolbar"><span>✦</span><i></i><i></i><i></i><b>REMOVE</b></div>
         </div>
-        <div class="local-chip"><strong>100%</strong><span data-i18n="hero.local">локальна обробка</span></div>
+        <div class="local-chip"><strong>100%</strong><span data-i18n="hero.local">lokale Verarbeitung</span></div>
       </div>
     </section>
 
     <section class="ad-shell ad-wide" data-ad-position="top" aria-label="Реклама">
-      <span class="ad-label" data-i18n="ads.label">РЕКЛАМА</span>
-      <div class="ad-placeholder"><b>AD</b><span data-i18n="ads.placeholder">Місце для адаптивного Google AdSense</span></div>
+      <span class="ad-label" data-i18n="ads.label">WERBUNG</span>
+      <div class="ad-placeholder"><b>AD</b><span data-i18n="ads.placeholder">Platz für responsive Google-AdSense-Werbung</span></div>
     </section>
 
     <section class="app-shell" id="editor">
       <div class="app-heading">
-        <div><p class="eyebrow"><span></span><span data-i18n="app.eyebrow">ВІДЕОРЕДАКТОР</span></p><h2 data-i18n="app.title">Створіть чисту версію відео</h2></div>
-        <div class="engine-status"><span id="engineDot"></span><div><strong id="engineState" data-i18n="engine.waiting">Рушій готовий до запуску</strong><small data-i18n="engine.note">FFmpeg завантажиться лише перед обробкою</small></div></div>
+        <div><p class="eyebrow"><span></span><span data-i18n="app.eyebrow">VIDEOEDITOR</span></p><h2 data-i18n="app.title">Erstellen Sie eine saubere Videoversion</h2></div>
+        <div class="engine-status"><span id="engineDot"></span><div><strong id="engineState" data-i18n="engine.waiting">Engine startbereit</strong><small data-i18n="engine.note">FFmpeg wird erst vor der Verarbeitung geladen</small></div></div>
       </div>
 
       <div id="uploadView" class="upload-view">
         <input id="videoInput" type="file" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,video/x-msvideo,.mp4,.mov,.webm,.mkv,.avi" hidden>
         <button id="uploadDrop" class="upload-drop" type="button">
           <span class="upload-icon"><i></i></span>
-          <strong data-i18n="upload.title">Перетягніть відео сюди</strong>
-          <small data-i18n="upload.subtitle">або натисніть, щоб вибрати файл</small>
+          <strong data-i18n="upload.title">Video hier ablegen</strong>
+          <small data-i18n="upload.subtitle">oder klicken, um eine Datei auszuwählen</small>
           <span class="upload-formats">MP4 · MOV · WEBM · MKV · AVI</span>
         </button>
-        <div class="privacy-explain"><span>⌁</span><p><strong data-i18n="upload.privacyTitle">Приватність вбудована</strong><small data-i18n="upload.privacyText">Файл читається тільки вашим браузером і нікуди не надсилається.</small></p></div>
+        <div class="privacy-explain"><span>⌁</span><p><strong data-i18n="upload.privacyTitle">Datenschutz integriert</strong><small data-i18n="upload.privacyText">Die Datei wird nur von Ihrem Browser gelesen und nirgendwohin gesendet.</small></p></div>
       </div>
 
       <div id="editView" class="edit-view hidden">
@@ -100,7 +100,7 @@
             <div id="rectSelection" class="rect-selection hidden"><span></span></div>
             <div id="logoOverlay" class="logo-overlay hidden"><img alt=""><span class="resize-handle"></span></div>
             <img id="coverPreview" class="cover-preview hidden" alt="Попередній перегляд заставки">
-            <div class="stage-hint" id="stageHint" data-i18n="stage.drawRect">Протягніть рамку поверх логотипа</div>
+            <div class="stage-hint" id="stageHint" data-i18n="stage.drawRect">Drag a box over the logo</div>
           </div>
           <div class="player-controls">
             <button id="playButton" class="icon-button" type="button" aria-label="Відтворити">▶</button>
@@ -109,165 +109,166 @@
             <span id="duration">0:00</span>
             <button id="muteButton" class="icon-button" type="button" aria-label="Вимкнути звук">◖))</button>
           </div>
-          <div class="file-summary"><span id="fileName"></span><span id="fileMeta"></span><button id="replaceVideo" type="button" data-i18n="file.replace">Замінити</button></div>
+          <div class="file-summary"><span id="fileName"></span><span id="fileMeta"></span><button id="replaceVideo" type="button" data-i18n="file.replace">Replace</button></div>
         </div>
 
         <aside class="control-panel">
           <div class="operation-tabs" role="tablist">
-            <button class="active" data-operation="remove" type="button"><span>⌫</span><b data-i18n="tabs.remove">Прибрати</b></button>
-            <button data-operation="add" type="button"><span>＋</span><b data-i18n="tabs.add">Додати логотип</b></button>
-            <button data-operation="cover" type="button"><span>▣</span><b data-i18n="tabs.cover">Заставка</b></button>
+            <button class="active" data-operation="remove" type="button"><span>⌫</span><b data-i18n="tabs.remove">Entfernen</b></button>
+            <button data-operation="add" type="button"><span>＋</span><b data-i18n="tabs.add">Logo hinzufügen</b></button>
+            <button data-operation="cover" type="button"><span>▣</span><b data-i18n="tabs.cover">Intro / Outro</b></button>
           </div>
 
           <div id="removePanel" class="settings-panel">
             <section class="setting-group">
-              <div class="setting-title"><span>01</span><div><strong data-i18n="remove.areaTitle">Виділіть область</strong><small data-i18n="remove.areaText">Працюйте на зупиненому кадрі</small></div></div>
+              <div class="setting-title"><span>01</span><div><strong data-i18n="remove.areaTitle">Bereich auswählen</strong><small data-i18n="remove.areaText">Arbeiten Sie mit einem pausierten Bild</small></div></div>
               <div class="segmented" id="selectionTools">
-                <button class="active" data-tool="rectangle" type="button" data-i18n="remove.rectangle">▭ Прямокутник</button>
-                <button data-tool="brush" type="button" data-i18n="remove.brush">⌁ Кисть</button>
+                <button class="active" data-tool="rectangle" type="button" data-i18n="remove.rectangle">▭ Rechteck</button>
+                <button data-tool="brush" type="button" data-i18n="remove.brush">⌁ Pinsel</button>
               </div>
-              <label id="brushSizeRow" class="range-row hidden"><span><b data-i18n="remove.brushSize">Товщина кисті</b><output id="brushSizeValue">28 px</output></span><input id="brushSize" type="range" min="6" max="120" value="28"></label>
-              <div class="inline-actions"><button id="undoMask" type="button" data-i18n="remove.undo">↶ Скасувати</button><button id="clearMask" type="button" data-i18n="remove.clear">Очистити</button></div>
-              <p id="selectionSummary" class="selection-summary" data-i18n="remove.empty">Область ще не виділена</p>
+              <label id="brushSizeRow" class="range-row hidden"><span><b data-i18n="remove.brushSize">Pinselgröße</b><output id="brushSizeValue">28 px</output></span><input id="brushSize" type="range" min="6" max="120" value="28"></label>
+              <div class="inline-actions"><button id="undoMask" type="button" data-i18n="remove.undo">↶ Rückgängig</button><button id="clearMask" type="button" data-i18n="remove.clear">Leeren</button></div>
+              <p id="selectionSummary" class="selection-summary" data-i18n="remove.empty">Noch kein Bereich ausgewählt</p>
             </section>
 
             <section class="setting-group">
-              <div class="setting-title"><span>02</span><div><strong data-i18n="remove.methodTitle">Оберіть метод</strong><small data-i18n="remove.methodText">Локальні режими відновлення фону</small></div></div>
+              <div class="setting-title"><span>02</span><div><strong data-i18n="remove.methodTitle">Methode wählen</strong><small data-i18n="remove.methodText">Lokale Modi zur Hintergrundrekonstruktion</small></div></div>
               <div class="method-grid" id="methodGrid">
-                <button class="method-card active" data-method="smart" type="button"><span class="method-icon smart-icon">✦</span><b data-i18n="method.smart">Розумне — FFmpeg</b><small data-i18n="method.smartText">Відновлює фон за маскою</small></button>
-                <button class="method-card" data-method="delogo" type="button"><span class="method-icon delogo-icon">▭</span><b data-i18n="method.delogo">Швидке — delogo</b><small data-i18n="method.delogoText">Тільки прямокутна область</small></button>
-                <button class="method-card method-wide" data-method="opencv" type="button"><span class="method-icon opencv-icon">CV</span><b data-i18n="method.opencv">OpenCV — відновлення</b><small data-i18n="method.opencvText">Домальовує кожен кадр · до 15 секунд</small></button>
+                <button class="method-card active" data-method="smart" type="button"><span class="method-icon smart-icon">✦</span><b data-i18n="method.smart">Intelligent — FFmpeg</b><small data-i18n="method.smartText">Rekonstruiert den Hintergrund per Maske</small></button>
+                <button class="method-card" data-method="delogo" type="button"><span class="method-icon delogo-icon">▭</span><b data-i18n="method.delogo">Schnell — delogo</b><small data-i18n="method.delogoText">Nur rechteckige Bereiche</small></button>
+                <button class="method-card method-wide" data-method="opencv" type="button"><span class="method-icon opencv-icon">CV</span><b data-i18n="method.opencv">OpenCV-Wiederherstellung</b><small data-i18n="method.opencvText">Rekonstruiert jedes Bild · bis 15 Sekunden</small></button>
               </div>
-              <label id="strengthRow" class="range-row"><span><b data-i18n="remove.strength">Радіус відновлення</b><output id="strengthValue">24</output></span><input id="strength" type="range" min="8" max="48" value="24"></label>
+              <label id="strengthRow" class="range-row"><span><b data-i18n="remove.strength">Rekonstruktionsradius</b><output id="strengthValue">24</output></span><input id="strength" type="range" min="8" max="48" value="24"></label>
             </section>
           </div>
 
           <div id="addPanel" class="settings-panel hidden">
             <section class="setting-group">
-              <div class="setting-title"><span>01</span><div><strong data-i18n="add.uploadTitle">Завантажте логотип</strong><small data-i18n="add.uploadText">PNG із прозорістю дає найкращий результат</small></div></div>
+              <div class="setting-title"><span>01</span><div><strong data-i18n="add.uploadTitle">Logo hochladen</strong><small data-i18n="add.uploadText">Transparentes PNG liefert das beste Ergebnis</small></div></div>
               <input id="logoInput" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" hidden>
-              <button id="chooseLogo" class="logo-upload-button" type="button"><span>＋</span><b data-i18n="add.choose">Обрати PNG, JPG або WebP</b></button>
-              <p id="logoName" class="selection-summary" data-i18n="add.empty">Логотип ще не вибрано</p>
+              <button id="chooseLogo" class="logo-upload-button" type="button"><span>＋</span><b data-i18n="add.choose">PNG, JPG oder WebP wählen</b></button>
+              <p id="logoName" class="selection-summary" data-i18n="add.empty">Noch kein Logo ausgewählt</p>
             </section>
             <section class="setting-group">
-              <div class="setting-title"><span>02</span><div><strong data-i18n="add.positionTitle">Розташуйте на кадрі</strong><small data-i18n="add.positionText">Перетягніть логотип у потрібне місце</small></div></div>
-              <label class="range-row"><span><b data-i18n="add.size">Розмір</b><output id="logoSizeValue">22%</output></span><input id="logoSize" type="range" min="5" max="60" value="22"></label>
-              <label class="range-row"><span><b data-i18n="add.opacity">Прозорість</b><output id="logoOpacityValue">90%</output></span><input id="logoOpacity" type="range" min="10" max="100" value="90"></label>
+              <div class="setting-title"><span>02</span><div><strong data-i18n="add.positionTitle">Im Bild platzieren</strong><small data-i18n="add.positionText">Ziehen Sie das Logo an die gewünschte Stelle</small></div></div>
+              <label class="range-row"><span><b data-i18n="add.size">Größe</b><output id="logoSizeValue">22%</output></span><input id="logoSize" type="range" min="5" max="60" value="22"></label>
+              <label class="range-row"><span><b data-i18n="add.opacity">Deckkraft</b><output id="logoOpacityValue">90%</output></span><input id="logoOpacity" type="range" min="10" max="100" value="90"></label>
             </section>
           </div>
 
           <div id="coverPanel" class="settings-panel hidden">
             <section class="setting-group">
-              <div class="setting-title"><span>01</span><div><strong data-i18n="cover.uploadTitle">Завантажте зображення</strong><small data-i18n="cover.uploadText">Для YouTube радимо 16:9 · 1280×720 або 1920×1080</small></div></div>
+              <div class="setting-title"><span>01</span><div><strong data-i18n="cover.uploadTitle">Bild hochladen</strong><small data-i18n="cover.uploadText">Für YouTube 16:9 verwenden · 1280×720 oder 1920×1080</small></div></div>
               <input id="coverInput" type="file" accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp" hidden>
-              <button id="chooseCover" class="logo-upload-button" type="button"><span>＋</span><b data-i18n="cover.choose">Обрати JPG, PNG або WebP</b></button>
-              <p id="coverName" class="selection-summary" data-i18n="cover.empty">Зображення ще не вибрано</p>
+              <button id="chooseCover" class="logo-upload-button" type="button"><span>＋</span><b data-i18n="cover.choose">JPG, PNG oder WebP wählen</b></button>
+              <p id="coverName" class="selection-summary" data-i18n="cover.empty">Noch kein Bild ausgewählt</p>
             </section>
             <section class="setting-group">
-              <div class="setting-title"><span>02</span><div><strong data-i18n="cover.positionTitle">Де показати заставку</strong><small data-i18n="cover.positionText">Додайте її перед відео або після нього</small></div></div>
+              <div class="setting-title"><span>02</span><div><strong data-i18n="cover.positionTitle">Position wählen</strong><small data-i18n="cover.positionText">Bild vor oder nach dem Video einfügen</small></div></div>
               <div class="segmented" id="coverPosition">
-                <button class="active" data-cover-position="start" type="button" data-i18n="cover.start">На початку</button>
-                <button data-cover-position="end" type="button" data-i18n="cover.end">У кінці</button>
+                <button class="active" data-cover-position="start" type="button" data-i18n="cover.start">Am Anfang</button>
+                <button data-cover-position="end" type="button" data-i18n="cover.end">Am Ende</button>
               </div>
-              <label class="range-row"><span><b data-i18n="cover.duration">Тривалість</b><output id="coverDurationValue">3.0 с</output></span><input id="coverDuration" type="range" min="1" max="10" step="0.5" value="3"></label>
-              <label class="select-row"><span data-i18n="cover.fitLabel">Заповнення кадру</span><select id="coverFit"><option value="cover" data-i18n="cover.fitCover">На весь кадр · краї можуть обрізатися</option><option value="contain" data-i18n="cover.fitContain">Показати повністю · можливі поля</option></select></label>
+              <label class="range-row"><span><b data-i18n="cover.duration">Dauer</b><output id="coverDurationValue">3.0 с</output></span><input id="coverDuration" type="range" min="1" max="10" step="0.5" value="3"></label>
+              <label class="select-row"><span data-i18n="cover.fitLabel">Bildanpassung</span><select id="coverFit"><option value="cover" data-i18n="cover.fitCover">Rahmen füllen · Ränder können beschnitten werden</option><option value="contain" data-i18n="cover.fitContain">Ganzes Bild · Balken sind möglich</option></select></label>
             </section>
           </div>
 
           <section class="setting-group export-group">
-            <div class="setting-title"><span>03</span><div><strong data-i18n="export.title">Якість експорту</strong><small data-i18n="export.text">Роздільна здатність оригіналу зберігається</small></div></div>
+            <div class="setting-title"><span>03</span><div><strong data-i18n="export.title">Exportqualität</strong><small data-i18n="export.text">Die Originalauflösung bleibt erhalten</small></div></div>
             <select id="qualitySelect">
-              <option value="18" data-i18n="export.maximum">Максимальна · CRF 18</option>
-              <option value="21" selected data-i18n="export.high">Висока · CRF 21</option>
-              <option value="25" data-i18n="export.compact">Компактна · CRF 25</option>
+              <option value="18" data-i18n="export.maximum">Maximum · CRF 18</option>
+              <option value="21" selected data-i18n="export.high">High · CRF 21</option>
+              <option value="25" data-i18n="export.compact">Compact · CRF 25</option>
             </select>
           </section>
 
           <section class="setting-group trim-group">
-            <div class="setting-title"><span>04</span><div><strong data-i18n="trim.title">Обрізати відео</strong><small data-i18n="trim.text">Приберіть зайве на початку або в кінці</small></div></div>
+            <div class="setting-title"><span>04</span><div><strong data-i18n="trim.title">Video kürzen</strong><small data-i18n="trim.text">Anfang oder Ende entfernen</small></div></div>
             <div class="trim-visual" aria-hidden="true"><div id="trimSelected"></div></div>
-            <label class="range-row"><span><b data-i18n="trim.start">Початок</b><output id="trimStartValue">0:00.0</output></span><input id="trimStart" type="range" min="0" max="0" step="0.1" value="0"></label>
-            <label class="range-row"><span><b data-i18n="trim.end">Кінець</b><output id="trimEndValue">0:00.0</output></span><input id="trimEnd" type="range" min="0" max="0" step="0.1" value="0"></label>
+            <label class="range-row"><span><b data-i18n="trim.start">Anfang</b><output id="trimStartValue">0:00.0</output></span><input id="trimStart" type="range" min="0" max="0" step="0.1" value="0"></label>
+            <label class="range-row"><span><b data-i18n="trim.end">Ende</b><output id="trimEndValue">0:00.0</output></span><input id="trimEnd" type="range" min="0" max="0" step="0.1" value="0"></label>
             <div class="time-entry-grid">
               <div class="time-entry">
-                <strong data-i18n="trim.exactStart">Точний початок</strong>
-                <div><label><input id="trimStartMinutes" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Хвилини початку"><span data-i18n="trim.minutesShort">хв</span></label><i>:</i><label><input id="trimStartSeconds" type="number" min="0" step="0.1" value="0.0" inputmode="decimal" aria-label="Секунди початку"><span data-i18n="trim.secondsShort">с</span></label></div>
+                <strong data-i18n="trim.exactStart">Genauer Anfang</strong>
+                <div><label><input id="trimStartMinutes" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Хвилини початку"><span data-i18n="trim.minutesShort">Min</span></label><i>:</i><label><input id="trimStartSeconds" type="number" min="0" step="0.1" value="0.0" inputmode="decimal" aria-label="Секунди початку"><span data-i18n="trim.secondsShort">Sek</span></label></div>
               </div>
               <div class="time-entry">
-                <strong data-i18n="trim.exactEnd">Точний кінець</strong>
-                <div><label><input id="trimEndMinutes" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Хвилини кінця"><span data-i18n="trim.minutesShort">хв</span></label><i>:</i><label><input id="trimEndSeconds" type="number" min="0" step="0.1" value="0.0" inputmode="decimal" aria-label="Секунди кінця"><span data-i18n="trim.secondsShort">с</span></label></div>
+                <strong data-i18n="trim.exactEnd">Genaues Ende</strong>
+                <div><label><input id="trimEndMinutes" type="number" min="0" step="1" value="0" inputmode="numeric" aria-label="Хвилини кінця"><span data-i18n="trim.minutesShort">Min</span></label><i>:</i><label><input id="trimEndSeconds" type="number" min="0" step="0.1" value="0.0" inputmode="decimal" aria-label="Секунди кінця"><span data-i18n="trim.secondsShort">Sek</span></label></div>
               </div>
             </div>
-            <div class="trim-summary"><span data-i18n="trim.duration">Тривалість результату</span><b id="trimDuration">0:00.0</b><button id="resetTrim" type="button" data-i18n="trim.reset">Скинути</button></div>
+            <div class="trim-summary"><span data-i18n="trim.duration">Ergebnisdauer</span><b id="trimDuration">0:00.0</b><button id="resetTrim" type="button" data-i18n="trim.reset">Zurücksetzen</button></div>
           </section>
 
-          <button id="processButton" class="process-button" type="button" disabled><span>✦</span><span data-i18n="process.start">Обробити відео</span></button>
-          <p class="process-note" data-i18n="process.note">Під час першого запуску браузер завантажить приблизно 32 МБ рушія.</p>
+          <button id="processButton" class="process-button" type="button" disabled><span>✦</span><span data-i18n="process.start">Video verarbeiten</span></button>
+          <p class="process-note" data-i18n="process.note">Beim ersten Start lädt der Browser etwa 32 MB Engine-Dateien.</p>
 
           <div class="ad-shell ad-sidebar" data-ad-position="sidebar" aria-label="Реклама">
-            <span class="ad-label" data-i18n="ads.label">РЕКЛАМА</span><div class="ad-placeholder"><b>AD</b><span>300 × 250</span></div>
+            <span class="ad-label" data-i18n="ads.label">WERBUNG</span><div class="ad-placeholder"><b>AD</b><span>300 × 250</span></div>
           </div>
         </aside>
       </div>
 
       <div id="progressView" class="status-view hidden" aria-live="polite">
         <div class="render-orbit"><span></span><i></i></div>
-        <p class="eyebrow"><span></span><span data-i18n="progress.eyebrow">ЛОКАЛЬНА ОБРОБКА</span></p>
-        <h2 id="progressTitle" data-i18n="progress.loading">Готуємо відеорушій…</h2>
-        <p id="progressDetail" data-i18n="progress.loadingText">Один раз завантажуємо FFmpeg WebAssembly у ваш браузер.</p>
+        <p class="eyebrow"><span></span><span data-i18n="progress.eyebrow">LOCAL PROCESSING</span></p>
+        <h2 id="progressTitle" data-i18n="progress.loading">Preparing the video engine…</h2>
+        <p id="progressDetail" data-i18n="progress.loadingText">FFmpeg WebAssembly is loaded into your browser once.</p>
         <div class="progress-track"><div id="progressBar"></div></div>
         <div class="progress-meta"><span id="progressPercent">0%</span><span id="progressElapsed">0:00</span></div>
-        <button id="cancelButton" class="text-button" type="button" data-i18n="progress.cancel">Скасувати</button>
+        <button id="cancelButton" class="text-button" type="button" data-i18n="progress.cancel">Cancel</button>
       </div>
 
       <div id="resultView" class="result-view hidden">
-        <div class="result-copy"><span class="result-check">✓</span><div><p class="eyebrow"><span></span><span data-i18n="result.eyebrow">ГОТОВО</span></p><h2 data-i18n="result.title">Нове відео готове</h2><p data-i18n="result.text">Перегляньте результат і збережіть MP4-копію на пристрій.</p></div></div>
+        <div class="result-copy"><span class="result-check">✓</span><div><p class="eyebrow"><span></span><span data-i18n="result.eyebrow">READY</span></p><h2 data-i18n="result.title">Ihr neues Video ist fertig</h2><p data-i18n="result.text">Prüfen Sie das Ergebnis und speichern Sie die MP4-Kopie.</p></div></div>
         <video id="resultVideo" controls playsinline></video>
-        <div class="next-step-card"><span>02</span><div><strong data-i18n="result.nextTitle">Хочете продовжити?</strong><small data-i18n="result.nextText">Використайте результат як нове відео: додайте логотип, заставку на початок чи кінець або обріжте ролик.</small></div><button id="continueEditing" class="secondary-button" type="button" data-i18n="result.continue">Продовжити редагування</button></div>
-        <div class="result-actions"><a id="downloadButton" class="primary-button" download="logomend-result.mp4" data-i18n="result.download">Завантажити MP4</a><button id="editAgain" class="secondary-button" type="button" data-i18n="result.back">Змінити цей крок</button><button id="newVideo" class="text-button" type="button" data-i18n="result.new">Інше відео</button></div>
+        <div class="next-step-card"><span>02</span><div><strong data-i18n="result.nextTitle">Weiter bearbeiten?</strong><small data-i18n="result.nextText">Nutzen Sie das Ergebnis als neue Quelle: Logo, Intro-/Outro-Bild hinzufügen oder kürzen.</small></div><button id="continueEditing" class="secondary-button" type="button" data-i18n="result.continue">Weiter bearbeiten</button></div>
+        <div class="result-actions"><a id="downloadButton" class="primary-button" download="logomend-result.mp4" data-i18n="result.download">MP4 herunterladen</a><button id="editAgain" class="secondary-button" type="button" data-i18n="result.back">Diesen Schritt ändern</button><button id="newVideo" class="text-button" type="button" data-i18n="result.new">Anderes Video</button></div>
       </div>
 
-      <div id="errorView" class="error-view hidden" role="alert"><b data-i18n="error.title">Не вдалося обробити відео</b><p id="errorText"></p><button id="errorBack" class="secondary-button" type="button" data-i18n="error.back">Повернутися</button></div>
+      <div id="errorView" class="error-view hidden" role="alert"><b data-i18n="error.title">Videoverarbeitung fehlgeschlagen</b><p id="errorText"></p><button id="errorBack" class="secondary-button" type="button" data-i18n="error.back">Zurück</button></div>
     </section>
 
     <section class="ad-shell ad-wide ad-bottom" data-ad-position="bottom" aria-label="Реклама">
-      <span class="ad-label" data-i18n="ads.label">РЕКЛАМА</span><div class="ad-placeholder"><b>AD</b><span data-i18n="ads.placeholder">Місце для адаптивного Google AdSense</span></div>
+      <span class="ad-label" data-i18n="ads.label">WERBUNG</span><div class="ad-placeholder"><b>AD</b><span data-i18n="ads.placeholder">Platz für responsive Google-AdSense-Werbung</span></div>
     </section>
 
     <section class="how-section" id="how">
-      <div class="section-heading"><p class="eyebrow"><span></span><span data-i18n="how.eyebrow">ПРОСТИЙ ПРОЦЕС</span></p><h2 data-i18n="how.title">Від відео до результату за три кроки</h2></div>
+      <div class="section-heading"><p class="eyebrow"><span></span><span data-i18n="how.eyebrow">EINFACHER ABLAUF</span></p><h2 data-i18n="how.title">In drei Schritten zum Ergebnis</h2></div>
       <div class="steps-grid">
-        <article><span>01</span><div class="step-icon">↥</div><h3 data-i18n="how.step1Title">Додайте відео</h3><p data-i18n="how.step1Text">Оберіть файл із комп’ютера. Він не завантажуватиметься на наш сервер.</p></article>
-        <article><span>02</span><div class="step-icon">⌁</div><h3 data-i18n="how.step2Title">Позначте логотип</h3><p data-i18n="how.step2Text">Намалюйте точну маску пензлем або виділіть прямокутну область.</p></article>
-        <article><span>03</span><div class="step-icon">↓</div><h3 data-i18n="how.step3Title">Збережіть результат</h3><p data-i18n="how.step3Text">Перегляньте готове відео й завантажте MP4 на свій пристрій.</p></article>
+        <article><span>01</span><div class="step-icon">↥</div><h3 data-i18n="how.step1Title">Video hinzufügen</h3><p data-i18n="how.step1Text">Wählen Sie eine Datei. Sie wird nicht auf unseren Server hochgeladen.</p></article>
+        <article><span>02</span><div class="step-icon">⌁</div><h3 data-i18n="how.step2Title">Logo markieren</h3><p data-i18n="how.step2Text">Malen Sie eine genaue Maske oder wählen Sie ein Rechteck.</p></article>
+        <article><span>03</span><div class="step-icon">↓</div><h3 data-i18n="how.step3Title">Ergebnis speichern</h3><p data-i18n="how.step3Text">Prüfen Sie das fertige Video und laden Sie die MP4-Datei herunter.</p></article>
       </div>
     </section>
 
     <section class="compare-section">
-      <div><p class="eyebrow"><span></span><span data-i18n="compare.eyebrow">ДВА ПРОДУКТИ</span></p><h2 data-i18n="compare.title">Web для зручності.<br>Local для максимальної потужності.</h2><p data-i18n="compare.text">Браузерна версія ідеальна для коротких відео та швидких правок. Для довгих 2K/4K-файлів і AI-відновлення STTN використовуйте LogoMend Local.</p></div>
+      <div><p class="eyebrow"><span></span><span data-i18n="compare.eyebrow">ZWEI PRODUKTE</span></p><h2 data-i18n-html="compare.title">Web für Komfort.<br>Local für maximale Leistung.</h2><p data-i18n="compare.text">Die Browser-Version eignet sich für kurze Videos und schnelle Korrekturen. Für lange 2K/4K-Dateien und STTN-KI-Wiederherstellung verwenden Sie LogoMend Local.</p></div>
       <div class="compare-cards">
-        <article class="featured"><span>WEB</span><h3>LogoMend Web</h3><ul><li data-i18n="compare.web1">Без встановлення</li><li data-i18n="compare.web2">Обробка у браузері</li><li data-i18n="compare.web3">FFmpeg, OpenCV і власний логотип</li></ul><b data-i18n="compare.current">Ви тут</b></article>
-        <article><span>LOCAL</span><h3>LogoMend Local</h3><ul><li data-i18n="compare.local1">Для великих файлів</li><li data-i18n="compare.local2">STTN та багатокадрові режими</li><li data-i18n="compare.local3">Швидше на потужному ПК</li></ul><a href="./downloads/" data-i18n="compare.download">Завантажити для Windows →</a></article>
+        <article class="featured"><span>WEB</span><h3>LogoMend Web</h3><ul><li data-i18n="compare.web1">Keine Installation</li><li data-i18n="compare.web2">Verarbeitung im Browser</li><li data-i18n="compare.web3">Logos entfernen und hinzufügen, kürzen sowie Intro/Outro</li></ul><b data-i18n="compare.current">Sie sind hier</b></article>
+        <article><span>LOCAL</span><h3>LogoMend Local</h3><ul><li data-i18n="compare.local1">Für große Dateien</li><li data-i18n="compare.local2">STTN- und Mehrbild-Modi</li><li data-i18n="compare.local3">Schneller auf einem leistungsstarken PC</li></ul><a href="./downloads/" data-i18n="compare.download">Für Windows herunterladen →</a></article>
       </div>
     </section>
 
     <section class="faq-section" id="faq">
-      <div class="section-heading"><p class="eyebrow"><span></span><span data-i18n="faq.eyebrow">ПОШИРЕНІ ЗАПИТАННЯ</span></p><h2 data-i18n="faq.title">Що варто знати</h2></div>
+      <div class="section-heading"><p class="eyebrow"><span></span><span data-i18n="faq.eyebrow">HÄUFIG GESTELLTE FRAGEN</span></p><h2 data-i18n="faq.title">Gut zu wissen</h2></div>
       <div class="faq-list">
-        <details open><summary data-i18n="faq.q1">Чи завантажується моє відео на сервер?</summary><p data-i18n="faq.a1">Ні. Файл обробляється у пам’яті вашого браузера за допомогою WebAssembly. Ми не отримуємо його вміст.</p></details>
-        <details><summary data-i18n="faq.q2">Які формати й роздільні здатності підтримуються?</summary><p data-i18n="faq.a2">Найкраще працюють MP4, MOV і WebM. Підтримуються 720p, 1080p, 2K та 4K, але великі відео потребують більше оперативної пам’яті.</p></details>
-        <details><summary data-i18n="faq.q3">Чому Web-версія повільніша за Local?</summary><p data-i18n="faq.a3">Браузер ізолює обробку та має суворіші обмеження пам’яті. Local використовує нативний FFmpeg і краще підходить для великих файлів.</p></details>
-        <details><summary data-i18n="faq.q4">Чи зникне логотип абсолютно непомітно?</summary><p data-i18n="faq.a4">Результат залежить від фону, руху та розміру логотипа. OpenCV і FFmpeg відновлюють область із сусідніх пікселів; для дуже складного рухомого фону краще використовувати AI-режими Local.</p></details>
-        <details><summary data-i18n="faq.q5">Чи можна видаляти будь-які водяні знаки?</summary><p data-i18n="faq.a5">Обробляйте лише власні матеріали або відео, на редагування яких маєте дозвіл. Видалення чужих позначок авторства може порушувати права.</p></details>
+        <details open><summary data-i18n="faq.q1">Wird mein Video auf einen Server hochgeladen?</summary><p data-i18n="faq.a1">Nein. Die Datei wird mit WebAssembly im Speicher Ihres Browsers verarbeitet. Wir erhalten ihren Inhalt nicht.</p></details>
+        <details><summary data-i18n="faq.q2">Welche Formate und Auflösungen werden unterstützt?</summary><p data-i18n="faq.a2">MP4, MOV und WebM funktionieren am besten. 720p, 1080p, 2K und 4K werden unterstützt, große Videos benötigen jedoch mehr Speicher.</p></details>
+        <details><summary data-i18n="faq.q3">Warum ist Web langsamer als Local?</summary><p data-i18n="faq.a3">Browser isolieren die Verarbeitung und haben strengere Speichergrenzen. Local verwendet natives FFmpeg und eignet sich besser für große Dateien.</p></details>
+        <details><summary data-i18n="faq.q4">Verschwindet das Logo vollkommen unauffällig?</summary><p data-i18n="faq.a4">Das Ergebnis hängt von Hintergrund, Bewegung und Logogröße ab. OpenCV und FFmpeg rekonstruieren den Bereich aus benachbarten Pixeln; komplexe bewegte Hintergründe sind für die KI-Modi von Local besser geeignet.</p></details>
+        <details><summary data-i18n="faq.q5">Kann ich jedes Wasserzeichen entfernen?</summary><p data-i18n="faq.a5">Bearbeiten Sie nur eigenes Material oder Videos, für deren Bearbeitung Sie eine Erlaubnis haben. Das Entfernen fremder Urheberkennzeichnungen kann Rechte verletzen.</p></details>
+        <details><summary data-i18n="faq.q6">Kann ich ein Intro oder Outro hinzufügen und genau kürzen?</summary><p data-i18n="faq.a6">Ja. Fügen Sie JPG, PNG oder WebP am Anfang oder Ende ein, wählen Sie die Dauer und geben Sie die genaue Schnittzeit in Minuten und Sekunden ein.</p></details>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="brand"><span class="brand-mark">LM</span><span><strong>LogoMend</strong><small>WEB EDITION</small></span></div>
-    <p data-i18n="footer.tagline">Приватний відеоредактор, що працює на вашому пристрої.</p>
-    <div><a href="#faq" data-i18n="nav.faq">Запитання</a><a href="./privacy/" data-i18n="footer.privacy">Приватність</a><a href="./terms/" data-i18n="footer.terms">Умови</a></div>
-    <small>© 2026 LogoMend. <span data-i18n="footer.rights">Усі права захищені.</span></small>
+    <p data-i18n="footer.tagline">Ein privater Videoeditor, der auf Ihrem Gerät läuft.</p>
+    <div><a href="#faq" data-i18n="nav.faq">Fragen</a><a href="./privacy/" data-i18n="footer.privacy">Datenschutz</a><a href="./terms/" data-i18n="footer.terms">Bedingungen</a></div>
+    <small>© 2026 LogoMend. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></small>
   </footer>
 </body>
 </html>
